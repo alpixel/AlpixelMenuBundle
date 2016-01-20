@@ -11,7 +11,8 @@
     "require": {
         "php": ">=5.3.0",
         "symfony/symfony": ">=2.8",
-        "doctrine/doctrine-bundle": "*"
+        "doctrine/doctrine-bundle": "*",
+        "knplabs/knp-menu-bundle": "~2.1"
     },
     "autoload": {
         "psr-0": {
