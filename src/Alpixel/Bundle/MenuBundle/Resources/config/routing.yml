@@ -1,0 +1,3 @@
+alpixel_menu_homepage:
+    path:     /
+    defaults: { _controller: AlpixelMenuBundle:Default:index }
