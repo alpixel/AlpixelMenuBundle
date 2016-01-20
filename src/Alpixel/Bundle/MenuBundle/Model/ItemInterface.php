@@ -36,7 +36,7 @@ interface ItemInterface
      *
      * @return self
      */
-    public function setParent(ItemInterface $menu);
+    public function setParent(ItemInterface $menu = null);
 
     /**
      * Get name displayed in Item

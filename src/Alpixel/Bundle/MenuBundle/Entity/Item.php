@@ -98,7 +98,7 @@ class Item implements ItemInterface
      *
      * @return self
      */
-    public function setParent(ItemInterface $item)
+    public function setParent(ItemInterface $item = null)
     {
         $this->parent = $item;
 

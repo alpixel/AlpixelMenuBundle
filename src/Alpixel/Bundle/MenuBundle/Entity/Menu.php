@@ -3,9 +3,9 @@
 namespace Alpixel\Bundle\MenuBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 use Alpixel\Bundle\MenuBundle\Model\MenuInterface;
 use Alpixel\Bundle\MenuBundle\Model\ItemInterface;
-use Doctrine\Common\Collections\ArrayCollection;
 
 /**
 * @ORM\Table(name="alpixel_menu")

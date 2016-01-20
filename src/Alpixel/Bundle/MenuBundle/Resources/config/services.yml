@@ -1,4 +1,4 @@
 services:
-#    alpixel_menu.example:
-#        class: Alpixel\Bundle\MenuBundle\Example
-#        arguments: ["@service_id", "plain_value", %parameter%]
+   alpixel_menu.builder:
+       class: Alpixel\Bundle\MenuBundle\Builder\MenuBuilder
+       arguments: ["@doctrine.orm.validator.unique", "@knp_menu.factory"]
