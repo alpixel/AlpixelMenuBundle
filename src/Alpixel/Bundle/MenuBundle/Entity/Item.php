@@ -58,6 +58,16 @@ class Item implements ItemInterface
     protected $position;
 
     /**
+     * Get Id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
      * Get menu
      *
      * @return Menu

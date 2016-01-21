@@ -6,11 +6,11 @@ use Doctrine\ORM\EntityRepository;
 
 class MenuRepository extends EntityRepository
 {
-    public function findOneMenu($machineName, $locale)
+    public function findOneMenuByMachineNameAndLocale($machineName, $locale)
     {
         return $this->createQueryBuilder('m')
             ->join('m.items', 'i')
-            ->where('m.machine = :machineName')
+            ->where('m.machineName = :machineName')
             ->andWhere('m.locale = :locale')
             ->setParameters(array(
                 'machineName' => $machineName,

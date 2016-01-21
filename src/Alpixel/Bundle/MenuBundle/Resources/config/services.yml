@@ -1,4 +1,4 @@
 services:
    alpixel_menu.builder:
        class: Alpixel\Bundle\MenuBundle\Builder\MenuBuilder
-       arguments: ["@doctrine.orm.validator.unique", "@knp_menu.factory"]
+       arguments: ["@doctrine.orm.entity_manager", "@knp_menu.factory"]
