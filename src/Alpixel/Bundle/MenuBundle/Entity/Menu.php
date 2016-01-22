@@ -54,6 +54,16 @@ class Menu implements MenuInterface
     }
 
     /**
+     * Get string defined
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->machineName;
+    }
+
+    /**
      * Get Id
      *
      * @return integer

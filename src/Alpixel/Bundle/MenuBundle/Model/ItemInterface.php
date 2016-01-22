@@ -2,10 +2,19 @@
 
 namespace Alpixel\Bundle\MenuBundle\Model;
 
+use Alpixel\Bundle\MenuBundle\Model\ItemInterface;
 use Alpixel\Bundle\MenuBundle\Model\MenuInterface;
+use Doctrine\Common\Collections\ArrayCollection;
 
 interface ItemInterface
 {
+    /**
+     * Get string defined
+     *
+     * @return string
+     */
+    public function __toString();
+
     /**
      * Get menu
      *
@@ -36,7 +45,32 @@ interface ItemInterface
      *
      * @return self
      */
-    public function setParent(ItemInterface $menu = null);
+    public function setParent(ItemInterface $item = null);
+
+    /**
+     * Get chidlren of Item
+     *
+     * @return null\ArrayCollection (Item)
+     */
+    public function getChidlren();
+
+    /**
+     * Set Item from ArrayCollection
+     *
+     * @param null\ArrayCollection
+     *
+     * @return self
+     */
+    public function addChildren(ArrayCollection $collection = null);
+
+    /**
+     * Set chidlren of Item
+     *
+     * @param Item      $item
+     *
+     * @return self
+     */
+    public function setChidlren(ItemInterface $item);
 
     /**
      * Get name displayed in Item

@@ -2,10 +2,11 @@
 
 namespace Alpixel\Bundle\MenuBundle\Entity;
 
+use Alpixel\Bundle\MenuBundle\Model\ItemInterface;
+use Alpixel\Bundle\MenuBundle\Model\MenuInterface;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
-use Alpixel\Bundle\MenuBundle\Model\MenuInterface;
-use Alpixel\Bundle\MenuBundle\Model\ItemInterface;
 
 /**
 * @ORM\Table(name="alpixel_item")
@@ -25,10 +26,15 @@ class Item implements ItemInterface
     /**
      * @Gedmo\SortableGroup
      *
-     * @ORM\ManyToOne(targetEntity="Alpixel\Bundle\MenuBundle\Entity\Item")
+     * @ORM\ManyToOne(targetEntity="Alpixel\Bundle\MenuBundle\Entity\Item", inversedBy="children")
      * @ORM\JoinColumn(name="parent_id", referencedColumnName="item_id")
      */
     protected $parent;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Alpixel\Bundle\MenuBundle\Entity\Item", mappedBy="parent")
+     */
+    protected $children;
 
     /**
      * @ORM\ManyToOne(targetEntity="Alpixel\Bundle\MenuBundle\Entity\Menu", inversedBy="items")
@@ -56,6 +62,21 @@ class Item implements ItemInterface
      * @ORM\Column(name="position", type="integer", nullable=false)
      */
     protected $position;
+
+    public function __construct()
+    {
+        $this->chidlren = new ArrayCollection();
+    }
+
+    /**
+     * Get string defined
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->name;
+    }
 
     /**
      * Get Id
@@ -111,6 +132,49 @@ class Item implements ItemInterface
     public function setParent(ItemInterface $item = null)
     {
         $this->parent = $item;
+
+        return $this;
+    }
+
+
+    /**
+     * Get chidlren of Item
+     *
+     * @return null\ArrayCollection (Item)
+     */
+    public function getChidlren()
+    {
+        return $this->children;
+    }
+
+    /**
+     * Set Item from ArrayCollection
+     *
+     * @param null\ArrayCollection
+     *
+     * @return self
+     */
+    public function addChildren(ArrayCollection $collection = null)
+    {
+        foreach ($collection as $item) {
+            if($this->chidlren->contains($item) === false) {
+                $this->setChidlren($item);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * Set chidlren of Item
+     *
+     * @param Item      $item
+     *
+     * @return self
+     */
+    public function setChidlren(ItemInterface $item)
+    {
+        $this->chidlren->add($item);
 
         return $this;
     }

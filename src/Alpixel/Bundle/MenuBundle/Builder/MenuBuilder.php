@@ -5,54 +5,65 @@ namespace Alpixel\Bundle\MenuBundle\Builder;
 use Alpixel\Bundle\MenuBundle\Model\ItemInterface;
 use Doctrine\ORM\EntityManager;
 use Knp\Menu\FactoryInterface;
+use Knp\Menu\MenuItem as KnpMenuItem;
 
 class MenuBuilder
 {
     protected $entityManager;
-    protected $knpFactory;
+    protected $factory;
+    protected $knpMenu;
 
-    function __construct(EntityManager $entityManager, FactoryInterface $knpFactory)
+    function __construct(EntityManager $entityManager, FactoryInterface $factory)
     {
         $this->entityManager = $entityManager;
-        $this->knpFactory    = $knpFactory;
+        $this->factory       = $factory;
+        $this->knpMenu       = null;
     }
 
-    public function findMenu($machineName, $locale)
+    public function getKnpMenu()
+    {
+        return $this->knpMenu;
+    }
+
+    public function setKnpMenu(KnpMenuItem $knpMenu)
+    {
+        $this->knpMenu = $knpMenu;
+
+        return $this;
+    }
+
+    /**
+     * Create KnpMenuItem
+     *
+     * @param  string $machineName The name of menu
+     * @param  string $locale      Language code (Recommanded ISO-639)
+     *
+     * @return KnpMenuItem         Get formatted menu
+     */
+    public function createKnpMenu($machineName, $locale)
     {
         $repository = $this->entityManager->getRepository('AlpixelMenuBundle:Menu');
         $menu       = $repository->findOneMenuByMachineNameAndLocale($machineName, $locale);
+        $items      = $menu->getItems()->toArray();
 
-        $items = $menu->getItems()->toArray();
-        $tab   = [];
+        $this->setKnpMenu($this->factory->createItem('root'));
+        foreach ($items as $item) {
+            if($item->getParent() === null) {
+                $this->getTree($this->knpMenu, $item);
+            }
+        }
+
+        return $this->getKnpMenu();
     }
 
-    public function getTree($items, &$tab)
+    public function getTree(KnpMenuItem $knpMenu, ItemInterface $item, KnpMenuItem $parent = null)
     {
-        // if (is_array($items) === false) {
-        //     return $items;
-        // }
+        $menuItem = ($parent === null) ? $knpMenu->addChild($item) : $parent->addChild($item);
 
-        // foreach ($items as $parentKey => $parent) {
-        //     if ($parent->getParent() === null) {
-        //         $tab[$parent->getId()][] = $parent;
-        //         unset($items[$parentKey]);
-        //     }
-        // }
+        foreach ($item->getChidlren() as $child) {
+            $this->getTree($knpMenu, $child, $menuItem);
+        }
 
-        // foreach ($tab as $key => $value) {
-        //     foreach ($items as $childKey => $child) {
-        //         if (isset($element) === true && $element !== null) {
-        //             if($child->getParent() === $element) {
-        //                 $tab[$key][] = $child;
-        //             }
-        //             $element = null;
-        //         }
-        //         else if($child->getParent() === $value) {
-        //             $tab[$key][] = $child;
-        //         }
-        //     }
-        // }
-
-        // return;
+        return $menuItem;
     }
 }

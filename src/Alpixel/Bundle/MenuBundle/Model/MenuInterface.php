@@ -7,6 +7,14 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 interface MenuInterface
 {
+
+    /**
+     * Get string defined
+     *
+     * @return string
+     */
+    public function __toString();
+
     /**
      * Get the machineName the key for querying a menu.
      *
