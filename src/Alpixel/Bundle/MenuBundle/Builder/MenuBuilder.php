@@ -56,6 +56,15 @@ class MenuBuilder
         return $this->getKnpMenu();
     }
 
+    /**
+     * Create tree un KnpMenuItem
+     *
+     * @param  KnpMenuItem      $knpMenu
+     * @param  ItemInterface    $item
+     * @param  KnpMenuItem|null $parent
+     *
+     * @return KnpMenuItem      A formatted KnpMenu
+     */
     public function getTree(KnpMenuItem $knpMenu, ItemInterface $item, KnpMenuItem $parent = null)
     {
         $menuItem = ($parent === null) ? $knpMenu->addChild($item) : $parent->addChild($item);
