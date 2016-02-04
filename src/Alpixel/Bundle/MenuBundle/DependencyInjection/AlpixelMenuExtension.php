@@ -6,6 +6,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\Loader;
+use Symfony\Component\OptionsResolver\Exception\UndefinedOptionsException;
 
 /**
  * This is the class that loads and manages your bundle configuration.
@@ -19,10 +20,17 @@ class AlpixelMenuExtension extends Extension
      */
     public function load(array $configs, ContainerBuilder $container)
     {
+        if (!$container->hasParameter('locale')) {
+            throw new UndefinedOptionsException('The locale parameter must be defined under parameters in your symfony configuration');
+        }
+
         $configuration = new Configuration();
         $this->processConfiguration($configuration, $configs);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
+
+        $menuBuilder = $container->getDefinition('alpixel_menu.builder');
+        $menuBuilder->addMethodCall('setDefaultLocale', [$container->getParameter('locale')] );
     }
 }

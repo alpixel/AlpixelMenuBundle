@@ -17,17 +17,29 @@ class MenuExtension extends \Twig_Extension
     {
         return array(
             new \Twig_SimpleFunction('alpixel_get_menu', array($this, 'get')),
-            new \Twig_SimpleFunction('alpixel_get_menu', array($this, 'render'), array('is_safe' => array('html'))),
+            new \Twig_SimpleFunction('alpixel_render_menu', array($this, 'render'), array(
+                'is_safe' => array('html'),
+                'needs_environment' => true,
+            )),
         );
     }
 
-    public function get($machineName, $locale)
+    public function get($machineName, $locale = null)
     {
         return $this->builder->createKnpMenu($machineName, $locale);
     }
 
-    public function render($machineName, $locale)
+    public function render(\Twig_Environment $twig, $machineName, $locale = null)
     {
-        return $this->builder->render($machineName, $locale);
+        $menu = $this->get($machineName, $locale);
+
+        return $twig->render('AlpixelMenuBundle::twig:menu.html.twig', array(
+            'menu' => $menu,
+        ));
+    }
+
+    public function getName()
+    {
+        return 'alpixel_menu_bundle_twig_menu_extension';
     }
 }
