@@ -151,6 +151,10 @@ class MenuBuilder
     {
         $menuItem = ($parent === null) ? $knpMenu->addChild($item) : $parent->addChild($item);
 
+        if ($uri = $item->getUri() !== null) {
+            $menuItem->setUri($uri);
+        }
+
         foreach ($item->getChidlren() as $child) {
             $this->getTree($knpMenu, $child, $menuItem);
         }

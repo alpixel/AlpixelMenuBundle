@@ -52,9 +52,9 @@ class Item implements ItemInterface
     /**
      * @var string
      *
-     * @ORM\Column(name="url", type="text", nullable=false)
+     * @ORM\Column(name="uri", type="text", nullable=false)
      */
-    protected $url;
+    protected $uri;
 
     /**
      * @Gedmo\SortablePosition
@@ -208,9 +208,9 @@ class Item implements ItemInterface
      *
      * @return string
      */
-    public function getUrl()
+    public function getUri()
     {
-        return $this->url;
+        return $this->uri;
     }
 
     /**
@@ -220,9 +220,9 @@ class Item implements ItemInterface
      *
      * @return self
      */
-    public function setUrl($url)
+    public function setUri($uri)
     {
-        $this->url = $url;
+        $this->uri = $uri;
 
         return $this;
     }

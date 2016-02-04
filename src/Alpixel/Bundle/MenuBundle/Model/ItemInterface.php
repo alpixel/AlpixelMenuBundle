@@ -25,9 +25,8 @@ interface ItemInterface
     /**
      * Set menu
      *
-     * @param Menu $menu
-     *
-     * @return self
+     * @param Menu|\Alpixel\Bundle\MenuBundle\Model\MenuInterface $menu
+     * @return \Alpixel\Bundle\MenuBundle\Model\ItemInterface
      */
     public function setMenu(MenuInterface $menu);
 
@@ -41,9 +40,10 @@ interface ItemInterface
     /**
      * Set parent Item
      *
-     * @param ItemInterface $menu
+     * @param \Alpixel\Bundle\MenuBundle\Model\ItemInterface $item
+     * @return \Alpixel\Bundle\MenuBundle\Model\ItemInterface
+     * @internal param \Alpixel\Bundle\MenuBundle\Model\ItemInterface $menu
      *
-     * @return self
      */
     public function setParent(ItemInterface $item = null);
 
@@ -57,18 +57,18 @@ interface ItemInterface
     /**
      * Set Item from ArrayCollection
      *
-     * @param null\ArrayCollection
+     * @param ArrayCollection $collection
+     * @return \Alpixel\Bundle\MenuBundle\Model\ItemInterface
+     * @internal param $ null\ArrayCollection
      *
-     * @return self
      */
     public function addChildren(ArrayCollection $collection = null);
 
     /**
      * Set chidlren of Item
      *
-     * @param Item      $item
-     *
-     * @return self
+     * @param Item|\Alpixel\Bundle\MenuBundle\Model\ItemInterface $item
+     * @return \Alpixel\Bundle\MenuBundle\Model\ItemInterface
      */
     public function setChidlren(ItemInterface $item);
 
@@ -93,7 +93,7 @@ interface ItemInterface
      *
      * @return string
      */
-    public function getUrl();
+    public function getUri();
 
     /**
      * Set URL
@@ -102,7 +102,7 @@ interface ItemInterface
      *
      * @return self
      */
-    public function setUrl($url);
+    public function setUri($uri);
 
     /**
      * Get position of Item
