@@ -17,8 +17,8 @@
         "knplabs/knp-menu-bundle": "~2.1"
     },
     "autoload": {
-        "psr-0": {
-            "Alpixel\\Bundle\\MenuBundle\\": "src/"
+        "psr-4": {
+            "Alpixel\\Bundle\\MenuBundle\\": ""
         }
     }
 }
