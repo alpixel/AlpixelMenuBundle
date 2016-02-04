@@ -23,7 +23,7 @@ class MenuBuilder
      * @param EntityManager $entityManager
      * @param FactoryInterface $factory
      */
-    function __construct(EntityManager $entityManager, FactoryInterface $factory)
+    public function __construct(EntityManager $entityManager, FactoryInterface $factory)
     {
         $this->entityManager = $entityManager;
         $this->factory       = $factory;
