@@ -1,5 +1,7 @@
 {
     "name": "alpixel/menu-bundle",
+    "description": "Provide a menu builder",
+    "license": "MIT",
     "type": "symfony-bundle",
     "authors": [
         {
@@ -11,7 +13,8 @@
     "require": {
         "php": ">=5.3.0",
         "symfony/symfony": ">=2.8",
-        "doctrine/doctrine-bundle": "*"
+        "doctrine/doctrine-bundle": ">=1.6",
+        "knplabs/knp-menu-bundle": "~2.1"
     },
     "autoload": {
         "psr-0": {

@@ -1,0 +1,19 @@
+services:
+    alpixel_menu.builder:
+       class: Alpixel\Bundle\MenuBundle\Builder\MenuBuilder
+       arguments: ["@doctrine.orm.entity_manager", "@knp_menu.factory"]
+
+    alpixel_menu.main_menu:
+        class: Knp\Menu\MenuItem # the service definition requires setting the class
+        factory: ["@alpixel_menu.builder", createKnpMenu]
+        arguments:
+            - "main"
+        tags:
+            - { name: knp_menu.menu, alias: main }
+
+    alpixel_menu.twig.menu.extension:
+        class: Alpixel\Bundle\MenuBundle\Twig\MenuExtension
+        public: true
+        arguments: ["@alpixel_menu.builder"]
+        tags:
+            - { name: twig.extension }
