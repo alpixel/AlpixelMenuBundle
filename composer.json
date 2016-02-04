@@ -1,12 +1,14 @@
 {
     "name": "alpixel/menu-bundle",
     "description": "Provide a menu builder",
-    "license": "MIT",
     "type": "symfony-bundle",
+    "keywords": ["alpixel", "menu", "symfony2", "symfony", "bundle"],
+    "homepage": "https://www.alpixel.fr",
+    "license": "MIT",
     "authors": [
         {
             "name": "ALPIXEL",
-            "email": "sysadmin@alpixel.fr"
+            "email": "contact@alpixel.fr"
         }
     ],
     "minimum-stability": "dev",
