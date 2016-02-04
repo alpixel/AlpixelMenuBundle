@@ -10,10 +10,3 @@ services:
             - "main"
         tags:
             - { name: knp_menu.menu, alias: main }
-
-    alpixel_menu.twig.menu.extension:
-        class: Alpixel\Bundle\MenuBundle\Twig\MenuExtension
-        public: true
-        arguments: ["@alpixel_menu.builder"]
-        tags:
-            - { name: twig.extension }
