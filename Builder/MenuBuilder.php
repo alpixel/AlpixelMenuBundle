@@ -27,7 +27,6 @@ class MenuBuilder
     {
         $this->entityManager = $entityManager;
         $this->factory       = $factory;
-        $this->knpMenu       = null;
     }
 
     /**
@@ -54,7 +53,7 @@ class MenuBuilder
      */
     public function setDefaultLocale($locale)
     {
-        if(self::isValidLocale($locale)) {
+        if (self::isValidLocale($locale)) {
             $this->defaultLocale = $locale;
 
             return $this;
@@ -130,7 +129,7 @@ class MenuBuilder
 
         $this->setKnpMenu($this->factory->createItem('root'));
         foreach ($items as $item) {
-            if($item->getParent() === null) {
+            if ($item->getParent() === null) {
                 $this->getTree($this->knpMenu, $item);
             }
         }
@@ -155,7 +154,7 @@ class MenuBuilder
             $menuItem->setUri($uri);
         }
 
-        foreach ($item->getChidlren() as $child) {
+        foreach ($item->getChildren() as $child) {
             $this->getTree($knpMenu, $child, $menuItem);
         }
 
