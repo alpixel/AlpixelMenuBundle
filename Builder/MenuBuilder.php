@@ -66,6 +66,16 @@ class MenuBuilder
     }
 
     /**
+     * Return default locale
+     *
+     * @return string
+     */
+    public function getDefaultLocale()
+    {
+        return $this->defaultLocale;
+    }
+
+    /**
      * Check if the machineName is valid
      *
      * @param $machineName
@@ -118,7 +128,7 @@ class MenuBuilder
         }
 
         if ($locale === null) {
-            $locale = $this->defaultLocale;
+            $locale = $this->getDefaultLocale();
         } else if (!self::isValidLocale($locale)) {
             throw new LocaleException();
         }
