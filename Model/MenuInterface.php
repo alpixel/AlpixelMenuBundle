@@ -55,7 +55,7 @@ interface MenuInterface
     /**
      * Add Items objects from ArrayCollection
      *
-     * @param ArrayCollection $items
+     * @param \Doctrine\Common\Collections\ArrayCollection $items
      *
      * @return self
      */
@@ -64,7 +64,7 @@ interface MenuInterface
     /**
      * Remove Item object in ArrayCollection
      *
-     * @param Item $item
+     * @param \Alpixel\Bundle\MenuBundle\Model\ItemInterface $item
      *
      * @return self
      */
@@ -73,9 +73,9 @@ interface MenuInterface
     /**
      * Set items for the menu
      *
-     * @param null\ItemInterface $item
+     * @param \Alpixel\Bundle\MenuBundle\Model\ItemInterface $item
      *
-     * @return Item
+     * @return \Alpixel\Bundle\MenuBundle\Model\ItemInterface
      */
     public function setItem(ItemInterface $item);
 
@@ -89,6 +89,7 @@ interface MenuInterface
     /**
      * Set the locale language
      *
+     * @param string
      * @return self
      */
     public function setLocale($locale);

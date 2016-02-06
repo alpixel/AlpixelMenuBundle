@@ -2,7 +2,6 @@
 
 namespace Alpixel\Bundle\MenuBundle\Model;
 
-use Alpixel\Bundle\MenuBundle\Model\ItemInterface;
 use Alpixel\Bundle\MenuBundle\Model\MenuInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 
@@ -18,22 +17,23 @@ interface ItemInterface
     /**
      * Get menu
      *
-     * @return Menu
+     * @return \Alpixel\Bundle\MenuBundle\Model\MenuInterface
      */
     public function getMenu();
 
+
     /**
-     * Set menu
+     * Set MenuInterface
      *
-     * @param Menu|\Alpixel\Bundle\MenuBundle\Model\MenuInterface $menu
-     * @return \Alpixel\Bundle\MenuBundle\Model\ItemInterface
+     * @param \Alpixel\Bundle\MenuBundle\Model\MenuInterface $menu
+     * @return self
      */
     public function setMenu(MenuInterface $menu);
 
     /**
      * Get parent Item
      *
-     * @return null\Item
+     * @return null|\Alpixel\Bundle\MenuBundle\Model\MenuInterface
      */
     public function getParent();
 
@@ -97,16 +97,16 @@ interface ItemInterface
     public function setName($name);
 
     /**
-     * Get URL
+     * Get Uri
      *
-     * @return string
+     * @return null|string
      */
     public function getUri();
 
     /**
      * Set URL
      *
-     * @param string $url
+     * @param string $uri
      *
      * @return self
      */
@@ -118,7 +118,6 @@ interface ItemInterface
      * @return integer
      */
     public function getPosition();
-
 
     /**
      * Set position
