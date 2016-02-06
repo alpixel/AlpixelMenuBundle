@@ -13,6 +13,7 @@ class AppKernel extends Kernel
             new \Symfony\Bundle\TwigBundle\TwigBundle(),
             new \Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new \Knp\Bundle\MenuBundle\KnpMenuBundle(),
+            new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
             new \Alpixel\Bundle\MenuBundle\AlpixelMenuBundle(),
         ];
 
