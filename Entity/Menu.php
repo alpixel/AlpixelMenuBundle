@@ -139,7 +139,7 @@ class Menu implements MenuInterface
     public function removeItem(ItemInterface $item)
     {
         if($this->items->contains($item) === true) {
-            $this->items->remove($item);
+            $this->items->removeElement($item);
         }
 
         return $this;

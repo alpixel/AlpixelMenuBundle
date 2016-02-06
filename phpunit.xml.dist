@@ -2,7 +2,7 @@
 
 <phpunit bootstrap="./Tests/bootstrap.php" colors="true" forceCoversAnnotation="true">
     <testsuites>
-        <testsuite name="AlpixelMenuBundle test suite">
+        <testsuite name="AlpixelMenuBundle Test Suite">
             <directory suffix="Test.php">./Tests</directory>
         </testsuite>
     </testsuites>
@@ -17,4 +17,8 @@
             </exclude>
         </whitelist>
     </filter>
+
+    <php>
+        <server name="KERNEL_DIR" value="/Tests/app/" />
+    </php>
 </phpunit>

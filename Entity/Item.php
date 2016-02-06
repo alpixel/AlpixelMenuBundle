@@ -65,7 +65,7 @@ class Item implements ItemInterface
 
     public function __construct()
     {
-        $this->chidlren = new ArrayCollection();
+        $this->children = new ArrayCollection();
     }
 
     /**
@@ -138,11 +138,11 @@ class Item implements ItemInterface
 
 
     /**
-     * Get chidlren of Item
+     * Get children of Item
      *
-     * @return null\ArrayCollection (Item)
+     * @return ArrayCollection (Item)
      */
-    public function getChidlren()
+    public function getChildren()
     {
         return $this->children;
     }
@@ -154,27 +154,43 @@ class Item implements ItemInterface
      *
      * @return self
      */
-    public function addChildren(ArrayCollection $collection = null)
+    public function addChildren(ArrayCollection $collection)
     {
         foreach ($collection as $item) {
-            if($this->chidlren->contains($item) === false) {
-                $this->setChidlren($item);
-            }
+            $this->setChildren($item);
         }
 
         return $this;
     }
 
     /**
-     * Set chidlren of Item
+     * Set children of Item
      *
      * @param Item      $item
      *
      * @return self
      */
-    public function setChidlren(ItemInterface $item)
+    public function setChildren(ItemInterface $item)
     {
-        $this->chidlren->add($item);
+        if ($this->children->contains($item) === false) {
+            $this->children->add($item);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Remove children
+     *
+     * @param ItemInterface $item
+     *
+     * @return $this
+     */
+    public function removeChildren(ItemInterface $item)
+    {
+        if ($this->children->contains($item) === true) {
+            $this->children->removeElement($item);
+        }
 
         return $this;
     }

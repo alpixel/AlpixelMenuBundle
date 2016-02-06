@@ -10,7 +10,9 @@ class AppKernel extends Kernel
     {
         $bundles = [
             new \Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
+            new \Symfony\Bundle\TwigBundle\TwigBundle(),
             new \Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
+            new \Knp\Bundle\MenuBundle\KnpMenuBundle(),
             new \Alpixel\Bundle\MenuBundle\AlpixelMenuBundle(),
         ];
 

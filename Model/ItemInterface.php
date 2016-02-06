@@ -52,7 +52,7 @@ interface ItemInterface
      *
      * @return null\ArrayCollection (Item)
      */
-    public function getChidlren();
+    public function getChildren();
 
     /**
      * Set Item from ArrayCollection
@@ -62,15 +62,23 @@ interface ItemInterface
      * @internal param $ null\ArrayCollection
      *
      */
-    public function addChildren(ArrayCollection $collection = null);
+    public function addChildren(ArrayCollection $collection);
 
     /**
      * Set chidlren of Item
      *
-     * @param Item|\Alpixel\Bundle\MenuBundle\Model\ItemInterface $item
+     * @param \Alpixel\Bundle\MenuBundle\Model\ItemInterface $item
      * @return \Alpixel\Bundle\MenuBundle\Model\ItemInterface
      */
-    public function setChidlren(ItemInterface $item);
+    public function setChildren(ItemInterface $item);
+
+    /**
+     * Remove children
+     *
+     * @param \Alpixel\Bundle\MenuBundle\Model\ItemInterface $item
+     * @return mixed
+     */
+    public function removeChildren(ItemInterface $item);
 
     /**
      * Get name displayed in Item

@@ -27,7 +27,6 @@ class MenuBuilder
     {
         $this->entityManager = $entityManager;
         $this->factory       = $factory;
-        $this->knpMenu       = null;
     }
 
     /**
@@ -36,7 +35,7 @@ class MenuBuilder
      * @param $locale
      * @return bool
      */
-    protected static function isValidLocale($locale)
+    public static function isValidLocale($locale)
     {
         if (is_string($locale) && !empty($locale)) {
             return true;
@@ -54,7 +53,7 @@ class MenuBuilder
      */
     public function setDefaultLocale($locale)
     {
-        if(self::isValidLocale($locale)) {
+        if (self::isValidLocale($locale)) {
             $this->defaultLocale = $locale;
 
             return $this;
@@ -67,12 +66,22 @@ class MenuBuilder
     }
 
     /**
+     * Return default locale
+     *
+     * @return string
+     */
+    public function getDefaultLocale()
+    {
+        return $this->defaultLocale;
+    }
+
+    /**
      * Check if the machineName is valid
      *
      * @param $machineName
      * @return bool
      */
-    public static function isValidMachineNamme($machineName)
+    public static function isValidMachineName($machineName)
     {
         if (is_string($machineName) && !empty($machineName)) {
             return true;
@@ -114,12 +123,12 @@ class MenuBuilder
      */
     public function createKnpMenu($machineName, $locale = null)
     {
-        if (!self::isValidMachineNamme($machineName)) {
+        if (!self::isValidMachineName($machineName)) {
             throw new UnexpectedValueException('The parameter $machineName must be a non empty string');
         }
 
         if ($locale === null) {
-            $locale = $this->defaultLocale;
+            $locale = $this->getDefaultLocale();
         } else if (!self::isValidLocale($locale)) {
             throw new LocaleException();
         }
@@ -130,7 +139,7 @@ class MenuBuilder
 
         $this->setKnpMenu($this->factory->createItem('root'));
         foreach ($items as $item) {
-            if($item->getParent() === null) {
+            if ($item->getParent() === null) {
                 $this->getTree($this->knpMenu, $item);
             }
         }
@@ -155,7 +164,7 @@ class MenuBuilder
             $menuItem->setUri($uri);
         }
 
-        foreach ($item->getChidlren() as $child) {
+        foreach ($item->getChildren() as $child) {
             $this->getTree($knpMenu, $child, $menuItem);
         }
 

@@ -1,5 +1,4 @@
 composer.lock
 vendor/*
-.idea
-.vagrant
-Vagrantfile
+Tests/app/cache/
+Tests/app/logs/
