@@ -35,7 +35,7 @@ class MenuBuilder
      * @param $locale
      * @return bool
      */
-    protected static function isValidLocale($locale)
+    public static function isValidLocale($locale)
     {
         if (is_string($locale) && !empty($locale)) {
             return true;
@@ -71,7 +71,7 @@ class MenuBuilder
      * @param $machineName
      * @return bool
      */
-    public static function isValidMachineNamme($machineName)
+    public static function isValidMachineName($machineName)
     {
         if (is_string($machineName) && !empty($machineName)) {
             return true;
@@ -113,7 +113,7 @@ class MenuBuilder
      */
     public function createKnpMenu($machineName, $locale = null)
     {
-        if (!self::isValidMachineNamme($machineName)) {
+        if (!self::isValidMachineName($machineName)) {
             throw new UnexpectedValueException('The parameter $machineName must be a non empty string');
         }
 
