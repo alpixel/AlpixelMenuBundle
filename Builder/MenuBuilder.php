@@ -133,11 +133,13 @@ class MenuBuilder
             throw new LocaleException();
         }
 
-        $repository = $this->entityManager->getRepository('AlpixelMenuBundle:Menu');
-        $menu       = $repository->findOneMenuByMachineNameAndLocale($machineName, $locale);
-        $items      = $menu->getItems()->toArray();
-
         $this->setKnpMenu($this->factory->createItem('root'));
+
+        $menu = $this->entityManager
+            ->getRepository('AlpixelMenuBundle:Menu')
+            ->findOneMenuByMachineNameAndLocale($machineName, $locale)
+        ;
+        $items = $menu->getItems()->toArray();
         foreach ($items as $item) {
             if ($item->getParent() === null) {
                 $this->getTree($this->knpMenu, $item);

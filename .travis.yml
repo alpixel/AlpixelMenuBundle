@@ -24,7 +24,5 @@ matrix:
 
 install:
   - composer update --prefer-source $COMPOSER_FLAGS
-  - php Tests/bin/console doctrine:database:create --env=test
-  - php Tests/bin/console doctrine:schema:create --env=test
 
 script: phpunit --coverage-text

@@ -2,7 +2,7 @@ parameters:
     database_host: 127.0.0.1
     database_port: null
     database_name: alpixel_menu
-    database_user: travis
-    database_password: ~
+    database_user: root
+    database_password: root
     secret: NotSoSecret
     locale: fr
