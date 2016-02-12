@@ -5,4 +5,4 @@ parameters:
     database_user: travis
     database_password: ~
     secret: NotSoSecret
-    locale: fr
+    default_locale: fr
