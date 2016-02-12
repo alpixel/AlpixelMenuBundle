@@ -20,8 +20,8 @@ class AlpixelMenuExtension extends Extension
      */
     public function load(array $configs, ContainerBuilder $container)
     {
-        if (!$container->hasParameter('locale')) {
-            throw new UndefinedOptionsException('The locale parameter must be defined under parameters in your symfony configuration');
+        if (!$container->hasParameter('default_locale')) {
+            throw new UndefinedOptionsException('The default locale parameter must be defined under parameters in your symfony configuration');
         }
 
         $configuration = new Configuration();
@@ -31,6 +31,6 @@ class AlpixelMenuExtension extends Extension
         $loader->load('services.yml');
 
         $menuBuilder = $container->getDefinition('alpixel_menu.builder');
-        $menuBuilder->addMethodCall('setDefaultLocale', [$container->getParameter('locale')] );
+        $menuBuilder->addMethodCall('setDefaultLocale', [$container->getParameter('default_locale')] );
     }
 }
