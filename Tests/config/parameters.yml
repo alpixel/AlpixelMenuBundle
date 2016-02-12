@@ -5,4 +5,4 @@ parameters:
     database_user: root
     database_password: root
     secret: NotSoSecret
-    locale: fr
+    default_locale: fr
