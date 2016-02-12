@@ -2,6 +2,7 @@ imports:
     - { resource: parameters.yml }
 
 framework:
+    default_locale:  "fr"
     secret:          "%secret%"
     validation:      { enable_annotations: true }
     router:
