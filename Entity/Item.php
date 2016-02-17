@@ -27,7 +27,7 @@ class Item implements ItemInterface
      * @Gedmo\SortableGroup
      *
      * @ORM\ManyToOne(targetEntity="Alpixel\Bundle\MenuBundle\Entity\Item", inversedBy="children")
-     * @ORM\JoinColumn(name="parent_id", referencedColumnName="item_id")
+     * @ORM\JoinColumn(name="parent_id", referencedColumnName="item_id", onDelete="SET NULL")
      */
     protected $parent;
 
