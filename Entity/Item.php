@@ -9,13 +9,13 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
-* @ORM\Table(name="alpixel_item")
-* @ORM\Entity
-*/
+ * @ORM\Table(name="alpixel_item")
+ * @ORM\Entity
+ */
 class Item implements ItemInterface
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="item_id", type="integer", nullable=false)
      * @ORM\Id
@@ -69,7 +69,7 @@ class Item implements ItemInterface
     }
 
     /**
-     * Get string defined
+     * Get string defined.
      *
      * @return string
      */
@@ -79,9 +79,9 @@ class Item implements ItemInterface
     }
 
     /**
-     * Get Id
+     * Get Id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -89,7 +89,7 @@ class Item implements ItemInterface
     }
 
     /**
-     * Get menu
+     * Get menu.
      *
      * @return Menu
      */
@@ -99,7 +99,7 @@ class Item implements ItemInterface
     }
 
     /**
-     * Set menu
+     * Set menu.
      *
      * @param Menu $menu
      *
@@ -113,7 +113,7 @@ class Item implements ItemInterface
     }
 
     /**
-     * Get parent Item
+     * Get parent Item.
      *
      * @return null\Item
      */
@@ -123,7 +123,7 @@ class Item implements ItemInterface
     }
 
     /**
-     * Set parent Item
+     * Set parent Item.
      *
      * @param ItemInterface $menu
      *
@@ -136,9 +136,8 @@ class Item implements ItemInterface
         return $this;
     }
 
-
     /**
-     * Get children of Item
+     * Get children of Item.
      *
      * @return ArrayCollection (Item)
      */
@@ -148,7 +147,7 @@ class Item implements ItemInterface
     }
 
     /**
-     * Set Item from ArrayCollection
+     * Set Item from ArrayCollection.
      *
      * @param null\ArrayCollection
      *
@@ -164,9 +163,9 @@ class Item implements ItemInterface
     }
 
     /**
-     * Set children of Item
+     * Set children of Item.
      *
-     * @param Item      $item
+     * @param Item $item
      *
      * @return self
      */
@@ -180,7 +179,7 @@ class Item implements ItemInterface
     }
 
     /**
-     * Remove children
+     * Remove children.
      *
      * @param ItemInterface $item
      *
@@ -196,7 +195,7 @@ class Item implements ItemInterface
     }
 
     /**
-     * Get name displayed in Item
+     * Get name displayed in Item.
      *
      * @return string
      */
@@ -206,7 +205,7 @@ class Item implements ItemInterface
     }
 
     /**
-     * Set name displayed in Item
+     * Set name displayed in Item.
      *
      * @param string
      *
@@ -220,7 +219,7 @@ class Item implements ItemInterface
     }
 
     /**
-     * Get URL
+     * Get URL.
      *
      * @return string
      */
@@ -230,7 +229,7 @@ class Item implements ItemInterface
     }
 
     /**
-     * Set URL
+     * Set URL.
      *
      * @param string $url
      *
@@ -244,20 +243,19 @@ class Item implements ItemInterface
     }
 
     /**
-     * Get position of Item
+     * Get position of Item.
      *
-     * @return integer
+     * @return int
      */
     public function getPosition()
     {
         return $this->position;
     }
 
-
     /**
-     * Set position
+     * Set position.
      *
-     * @param  int    $position
+     * @param int $position
      *
      * @return self
      */

@@ -2,14 +2,12 @@
 
 namespace Alpixel\Bundle\MenuBundle\Model;
 
-use Alpixel\Bundle\MenuBundle\Model\ItemInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 
 interface MenuInterface
 {
-
     /**
-     * Get string defined
+     * Get string defined.
      *
      * @return string
      */
@@ -32,28 +30,28 @@ interface MenuInterface
     public function setMachineName($machineName);
 
     /**
-     * Get the name the value displayed to the administrator
+     * Get the name the value displayed to the administrator.
      *
      * @return self
      */
     public function getName();
 
     /**
-     * Set the name the value displayed to the administrator
+     * Set the name the value displayed to the administrator.
      *
      * @return self
      */
     public function setName($name);
 
     /**
-     * Get the items
+     * Get the items.
      *
      * @return object
      */
     public function getItems();
 
     /**
-     * Add Items objects from ArrayCollection
+     * Add Items objects from ArrayCollection.
      *
      * @param \Doctrine\Common\Collections\ArrayCollection $items
      *
@@ -62,7 +60,7 @@ interface MenuInterface
     public function addItems(ArrayCollection $items);
 
     /**
-     * Remove Item object in ArrayCollection
+     * Remove Item object in ArrayCollection.
      *
      * @param \Alpixel\Bundle\MenuBundle\Model\ItemInterface $item
      *
@@ -71,7 +69,7 @@ interface MenuInterface
     public function removeItem(ItemInterface $item);
 
     /**
-     * Set items for the menu
+     * Set items for the menu.
      *
      * @param \Alpixel\Bundle\MenuBundle\Model\ItemInterface $item
      *
@@ -80,16 +78,17 @@ interface MenuInterface
     public function setItem(ItemInterface $item);
 
     /**
-     * Get the locale language
+     * Get the locale language.
      *
      * @return string
      */
     public function getLocale();
 
     /**
-     * Set the locale language
+     * Set the locale language.
      *
      * @param string
+     *
      * @return self
      */
     public function setLocale($locale);

@@ -2,19 +2,19 @@
 
 namespace Alpixel\Bundle\MenuBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
-use Alpixel\Bundle\MenuBundle\Model\MenuInterface;
 use Alpixel\Bundle\MenuBundle\Model\ItemInterface;
+use Alpixel\Bundle\MenuBundle\Model\MenuInterface;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
-* @ORM\Table(name="alpixel_menu")
-* @ORM\Entity(repositoryClass="Alpixel\Bundle\MenuBundle\Entity\Repository\MenuRepository")
-*/
+ * @ORM\Table(name="alpixel_menu")
+ * @ORM\Entity(repositoryClass="Alpixel\Bundle\MenuBundle\Entity\Repository\MenuRepository")
+ */
 class Menu implements MenuInterface
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="menu_id", type="integer", nullable=false)
      * @ORM\Id
@@ -54,7 +54,7 @@ class Menu implements MenuInterface
     }
 
     /**
-     * Get string defined
+     * Get string defined.
      *
      * @return string
      */
@@ -64,9 +64,9 @@ class Menu implements MenuInterface
     }
 
     /**
-     * Get Id
+     * Get Id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -98,7 +98,7 @@ class Menu implements MenuInterface
     }
 
     /**
-     * Get the name the value displayed to the administrator
+     * Get the name the value displayed to the administrator.
      *
      * @return self
      */
@@ -108,7 +108,7 @@ class Menu implements MenuInterface
     }
 
     /**
-     * Set the name the value displayed to the administrator
+     * Set the name the value displayed to the administrator.
      *
      * @return self
      */
@@ -120,7 +120,7 @@ class Menu implements MenuInterface
     }
 
     /**
-     * Get the items
+     * Get the items.
      *
      * @return ArrayCollection of Item object
      */
@@ -130,15 +130,15 @@ class Menu implements MenuInterface
     }
 
     /**
-     * Remove Item obejct from ArrayCollection items
+     * Remove Item obejct from ArrayCollection items.
      *
-     * @param  ItemInterface $item
+     * @param ItemInterface $item
      *
      * @return self
      */
     public function removeItem(ItemInterface $item)
     {
-        if($this->items->contains($item) === true) {
+        if ($this->items->contains($item) === true) {
             $this->items->removeElement($item);
         }
 
@@ -146,7 +146,7 @@ class Menu implements MenuInterface
     }
 
     /**
-     * Add Items in items ArrayCollection
+     * Add Items in items ArrayCollection.
      *
      * @param ArrayCollection of Item object $items
      *
@@ -155,7 +155,7 @@ class Menu implements MenuInterface
     public function addItems(ArrayCollection $items)
     {
         foreach ($items as $item) {
-            if($this->items->contains($item) === false) {
+            if ($this->items->contains($item) === false) {
                 $this->setItem($item);
             }
         }
@@ -164,7 +164,7 @@ class Menu implements MenuInterface
     }
 
     /**
-     * Set items for the menu
+     * Set items for the menu.
      *
      * @param null\ItemInterface $item
      *
@@ -178,7 +178,7 @@ class Menu implements MenuInterface
     }
 
     /**
-     * Get the locale language
+     * Get the locale language.
      *
      * @return string
      */
@@ -188,7 +188,7 @@ class Menu implements MenuInterface
     }
 
     /**
-     * Set the locale language
+     * Set the locale language.
      *
      * @return self
      */
