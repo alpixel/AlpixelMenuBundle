@@ -163,6 +163,19 @@ class Menu implements MenuInterface
         return $this;
     }
 
+
+    /**
+     * Set items for the menu.
+     * @deprecated
+     * @param null\ItemInterface $item
+     *
+     * @return Item
+     */
+    public function setItem(ItemInterface $item)
+    {
+        return $this->addItem($item);
+    }
+
     /**
      * Set items for the menu.
      *
@@ -170,8 +183,9 @@ class Menu implements MenuInterface
      *
      * @return Item
      */
-    public function setItem(ItemInterface $item)
+    public function addItem(ItemInterface $item)
     {
+        $item->setMenu($this);
         $this->items->add($item);
 
         return $this;

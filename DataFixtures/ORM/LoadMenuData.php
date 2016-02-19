@@ -16,12 +16,13 @@ class LoadMenuData extends AbstractFixture implements FixtureInterface, OrderedF
         $menu = new Menu();
         $menu->setMachineName('main');
         $menu->setName('Menu principal');
-	$menu->setLocale('fr');
+	    $menu->setLocale('fr');
 
-	$item = new Item;
+	    $item = new Item;
         $item->setUri('/');
         $item->setName('Homepage');
-        $menu->setItem($item);
+
+        $menu->addItem($item);
 
         $manager->persist($item);
         $manager->persist($menu);
