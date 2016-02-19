@@ -3,7 +3,7 @@
 namespace Alpixel\Bundle\MenuBundle\DataFixtures\ORM;
 
 use Alpixel\Bundle\MenuBundle\Entity\Menu;
-use Alpixel\Bundle\MenuBundle\Entity\MenuItem;
+use Alpixel\Bundle\MenuBundle\Entity\Item;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
@@ -17,7 +17,7 @@ class LoadMenuData extends AbstractFixture implements FixtureInterface, OrderedF
 	$menu->setMachineName('main');
 	$menu->setName('Menu principal');
 
-	$item = new MenuItem;
+	$item = new Item;
 	$item->setUri('/');
 	$item->setName('Homepage');
 	$menu->addItem($item);
