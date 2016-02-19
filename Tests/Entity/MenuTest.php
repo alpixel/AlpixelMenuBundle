@@ -2,8 +2,8 @@
 
 namespace Alpixel\Bundle\MenuBundle\Tests\Entity;
 
-use Alpixel\Bundle\MenuBundle\Entity\Menu;
 use Alpixel\Bundle\MenuBundle\Entity\Item;
+use Alpixel\Bundle\MenuBundle\Entity\Menu;
 use Doctrine\Common\Collections\ArrayCollection;
 
 class MenuTest extends \PHPUnit_Framework_TestCase
@@ -27,7 +27,7 @@ class MenuTest extends \PHPUnit_Framework_TestCase
         $menu->setMachineName($test);
         $this->assertEquals($test, $menu->getMachineName());
     }
-    
+
     public function testName()
     {
         $menu = $this->getMenuInstance();

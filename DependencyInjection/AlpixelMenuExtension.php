@@ -2,10 +2,10 @@
 
 namespace Alpixel\Bundle\MenuBundle\DependencyInjection;
 
-use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
-use Symfony\Component\HttpKernel\DependencyInjection\Extension;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader;
+use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\OptionsResolver\Exception\UndefinedOptionsException;
 
 /**
@@ -31,6 +31,6 @@ class AlpixelMenuExtension extends Extension
         $loader->load('services.yml');
 
         $menuBuilder = $container->getDefinition('alpixel_menu.builder');
-        $menuBuilder->addMethodCall('setDefaultLocale', [$container->getParameter('default_locale')] );
+        $menuBuilder->addMethodCall('setDefaultLocale', [$container->getParameter('default_locale')]);
     }
 }

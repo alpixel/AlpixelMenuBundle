@@ -11,19 +11,19 @@ use Doctrine\Common\Persistence\ObjectManager;
 
 class LoadMenuData extends AbstractFixture implements FixtureInterface, OrderedFixtureInterface
 {
-    function load(ObjectManager $objectManager)
+    public function load(ObjectManager $objectManager)
     {
-	$menu = new Menu;
-	$menu->setMachineName('main');
-	$menu->setName('Menu principal');
+        $menu = new Menu();
+        $menu->setMachineName('main');
+        $menu->setName('Menu principal');
 
-	$item = new MenuItem;
-	$item->setUri('/');
-	$item->setName('Homepage');
-	$menu->addItem($item);
+        $item = new MenuItem();
+        $item->setUri('/');
+        $item->setName('Homepage');
+        $menu->addItem($item);
 
         $manager->persist($item);
-	$manager->persist($menu);
+        $manager->persist($menu);
         $manager->flush();
     }
 

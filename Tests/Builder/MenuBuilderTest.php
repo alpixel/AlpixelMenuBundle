@@ -2,14 +2,14 @@
 
 namespace Alpixel\Bundle\MenuBundle\Tests\Builder;
 
+use Alpixel\Bundle\MenuBundle\Builder\MenuBuilder;
 use Alpixel\Bundle\MenuBundle\Entity\Item;
 use Alpixel\Bundle\MenuBundle\Entity\Menu;
-use Alpixel\Bundle\MenuBundle\Builder\MenuBuilder;
 use Alpixel\Bundle\MenuBundle\Entity\Repository\MenuRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManager;
 use Knp\Menu\FactoryInterface;
 use Knp\Menu\MenuItem;
-use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class MenuBuilderTest extends KernelTestCase
@@ -41,12 +41,10 @@ class MenuBuilderTest extends KernelTestCase
     {
         $entityManagerMock = $this->getMockBuilder(EntityManager::class)
             ->disableOriginalConstructor()
-            ->getMock()
-        ;
+            ->getMock();
         $factoryMock = $this->getMockBuilder(FactoryInterface::class)
             ->disableOriginalConstructor()
-            ->getMock()
-        ;
+            ->getMock();
 
         $builder = new MenuBuilder($entityManagerMock, $factoryMock);
         $this->assertNull($builder->getDefaultLocale());
@@ -60,13 +58,11 @@ class MenuBuilderTest extends KernelTestCase
     {
         $entityManagerMock = $this->getMockBuilder(EntityManager::class)
             ->disableOriginalConstructor()
-            ->getMock()
-        ;
+            ->getMock();
         $repositoryMock = $this->getMockBuilder(MenuRepository::class)
             ->disableOriginalConstructor()
-            ->setMethods(array('findOneMenuByMachineNameAndLocale'))
-            ->getMock()
-        ;
+            ->setMethods(['findOneMenuByMachineNameAndLocale'])
+            ->getMock();
         $repositoryMock->method('findOneMenuByMachineNameAndLocale')->willReturn($this->getMenuContext('fr'));
         $entityManagerMock->method('getRepository')->willReturn($repositoryMock);
 
@@ -126,16 +122,15 @@ class MenuBuilderTest extends KernelTestCase
     {
         return [
             'fr' => [
-                'name' => 'Menu principal',
+                'name'        => 'Menu principal',
                 'machineName' => 'main',
-                'locale' => 'fr',
+                'locale'      => 'fr',
             ],
             'en' => [
-                'name' => 'Main menu',
+                'name'        => 'Main menu',
                 'machineName' => 'main',
-                'locale' => 'en',
+                'locale'      => 'en',
             ],
         ];
     }
-
 }

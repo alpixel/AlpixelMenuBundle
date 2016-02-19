@@ -16,23 +16,23 @@ class MenuBuilder
     protected $knpMenu;
     protected $defaultLocale;
 
-
     /**
      * MenuBuilder constructor.
      *
-     * @param EntityManager $entityManager
+     * @param EntityManager    $entityManager
      * @param FactoryInterface $factory
      */
     public function __construct(EntityManager $entityManager, FactoryInterface $factory)
     {
         $this->entityManager = $entityManager;
-        $this->factory       = $factory;
+        $this->factory = $factory;
     }
 
     /**
-     * Check if locale is valid
+     * Check if locale is valid.
      *
      * @param $locale
+     *
      * @return bool
      */
     public static function isValidLocale($locale)
@@ -49,6 +49,7 @@ class MenuBuilder
      * symfony configuration file under parameters.
      *
      * @param $locale String
+     *
      * @return $this
      */
     public function setDefaultLocale($locale)
@@ -66,7 +67,7 @@ class MenuBuilder
     }
 
     /**
-     * Return default locale
+     * Return default locale.
      *
      * @return string
      */
@@ -76,9 +77,10 @@ class MenuBuilder
     }
 
     /**
-     * Check if the machineName is valid
+     * Check if the machineName is valid.
      *
      * @param $machineName
+     *
      * @return bool
      */
     public static function isValidMachineName($machineName)
@@ -91,7 +93,7 @@ class MenuBuilder
     }
 
     /**
-     * Retrun null or a KnpMenuItem instance
+     * Retrun null or a KnpMenuItem instance.
      *
      * @return null|KnpMenuItem
      */
@@ -101,9 +103,10 @@ class MenuBuilder
     }
 
     /**
-     * Set the KnpMenuItem instance
+     * Set the KnpMenuItem instance.
      *
      * @param KnpMenuItem $knpMenu
+     *
      * @return $this
      */
     public function setKnpMenu(KnpMenuItem $knpMenu)
@@ -114,12 +117,12 @@ class MenuBuilder
     }
 
     /**
-     * Create KnpMenuItem
+     * Create KnpMenuItem.
      *
-     * @param  string $machineName The name of menu
-     * @param  string $locale      Language code (Recommanded ISO-639)
+     * @param string $machineName The name of menu
+     * @param string $locale      Language code (Recommanded ISO-639)
      *
-     * @return KnpMenuItem         Get formatted menu
+     * @return KnpMenuItem Get formatted menu
      */
     public function createKnpMenu($machineName, $locale = null)
     {
@@ -129,7 +132,7 @@ class MenuBuilder
 
         if ($locale === null) {
             $locale = $this->getDefaultLocale();
-        } else if (!self::isValidLocale($locale)) {
+        } elseif (!self::isValidLocale($locale)) {
             throw new LocaleException();
         }
 
@@ -137,8 +140,7 @@ class MenuBuilder
 
         $menu = $this->entityManager
             ->getRepository('AlpixelMenuBundle:Menu')
-            ->findOneMenuByMachineNameAndLocale($machineName, $locale)
-        ;
+            ->findOneMenuByMachineNameAndLocale($machineName, $locale);
         $items = $menu->getItems()->toArray();
         foreach ($items as $item) {
             if ($item->getParent() === null) {
@@ -150,13 +152,13 @@ class MenuBuilder
     }
 
     /**
-     * Create tree un KnpMenuItem
+     * Create tree un KnpMenuItem.
      *
-     * @param  KnpMenuItem      $knpMenu
-     * @param  ItemInterface    $item
-     * @param  KnpMenuItem|null $parent
+     * @param KnpMenuItem      $knpMenu
+     * @param ItemInterface    $item
+     * @param KnpMenuItem|null $parent
      *
-     * @return KnpMenuItem      A formatted KnpMenu
+     * @return KnpMenuItem A formatted KnpMenu
      */
     protected function getTree(KnpMenuItem $knpMenu, ItemInterface $item, KnpMenuItem $parent = null)
     {
