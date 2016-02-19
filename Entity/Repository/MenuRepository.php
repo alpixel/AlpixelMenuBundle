@@ -12,12 +12,11 @@ class MenuRepository extends EntityRepository
             ->join('m.items', 'i')
             ->where('m.machineName = :machineName')
             ->andWhere('m.locale = :locale')
-            ->setParameters(array(
+            ->setParameters([
                 'machineName' => $machineName,
                 'locale'      => $locale,
-            ))
+            ])
             ->getQuery()
-            ->getSingleResult()
-        ;
+            ->getSingleResult();
     }
 }

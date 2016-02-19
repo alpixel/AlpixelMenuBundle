@@ -2,8 +2,8 @@
 
 namespace Alpixel\Bundle\MenuBundle\Tests\Entity;
 
-use Alpixel\Bundle\MenuBundle\Entity\Menu;
 use Alpixel\Bundle\MenuBundle\Entity\Item;
+use Alpixel\Bundle\MenuBundle\Entity\Menu;
 use Doctrine\Common\Collections\ArrayCollection;
 
 class ItemTest extends \PHPUnit_Framework_TestCase
