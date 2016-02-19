@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * @ORM\Table(name="alpixel_item")
+ * @ORM\Table(name="alpixel_menu_item")
  * @ORM\Entity
  */
 class Item implements ItemInterface
