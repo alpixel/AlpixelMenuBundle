@@ -20,7 +20,7 @@ class LoadMenuData extends AbstractFixture implements FixtureInterface, OrderedF
 	$item = new Item;
         $item->setUri('/');
         $item->setName('Homepage');
-        $menu->addItem($item);
+        $menu->addItems($item);
 
         $manager->persist($item);
         $manager->persist($menu);
