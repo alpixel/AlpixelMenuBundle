@@ -163,10 +163,11 @@ class Menu implements MenuInterface
         return $this;
     }
 
-
     /**
      * Set items for the menu.
+     *
      * @deprecated
+     *
      * @param null\ItemInterface $item
      *
      * @return Item
