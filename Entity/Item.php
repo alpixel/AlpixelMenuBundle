@@ -63,6 +63,13 @@ class Item implements ItemInterface
      */
     protected $position;
 
+    /**
+     * @Gedmo\Slug(fields={"name"}, updatable=true, separator="_")
+     * @ORM\Column(length=128)
+     **/
+    protected $slug;
+
+
     public function __construct()
     {
         $this->children = new ArrayCollection();
@@ -262,6 +269,30 @@ class Item implements ItemInterface
     public function setPosition($position)
     {
         $this->position = $position;
+
+        return $this;
+    }
+
+    /**
+     * Gets the value of slug.
+     *
+     * @return mixed
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
+    /**
+     * Sets the value of slug.
+     *
+     * @param mixed $slug the slug
+     *
+     * @return self
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
 
         return $this;
     }

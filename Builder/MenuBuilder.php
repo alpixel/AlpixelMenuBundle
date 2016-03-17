@@ -17,6 +17,7 @@ class MenuBuilder
     protected $factory;
     protected $knpMenu;
     protected $defaultLocale;
+    protected $request;
 
     /**
      * MenuBuilder constructor.
@@ -30,6 +31,7 @@ class MenuBuilder
         $this->factory = $factory;
 
         $request = $requestStack->getCurrentRequest();
+        $this->request = $request;
         $this->currentUri = $request->getRequestUri();
     }
 
@@ -171,9 +173,24 @@ class MenuBuilder
     {
         $menuItem = ($parent === null) ? $knpMenu->addChild($item) : $parent->addChild($item);
 
-        if ($uri = $item->getUri() !== null) {
+        if (($uri = $item->getUri()) !== null) {
+            if($uri[0] == '/') {
+                $baseUri = $this->request->getBasePath().
+                           $this->request->getBaseURL().
+                           $uri;
+                $uri = $this->request->getSchemeAndHttpHost().$baseUri;
+
+                if ($baseUri === $this->currentUri) {
+                    $menuItem->setCurrent(true);
+                }
+            }
             $menuItem->setUri($uri);
         }
+
+        $menuItem->setAttributes([
+            'position' => $item->getPosition(),
+            'slug' => $item->getSlug()
+        ]);
 
         foreach ($item->getChildren() as $child) {
             if ($this->currentUri == $child->getUri()) {
@@ -181,7 +198,6 @@ class MenuBuilder
             }
             $this->getTree($knpMenu, $child, $menuItem);
         }
-
         return $menuItem;
     }
 }
