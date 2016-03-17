@@ -1,12 +1,4 @@
 services:
     alpixel_menu.builder:
        class: Alpixel\Bundle\MenuBundle\Builder\MenuBuilder
-       arguments: ["@doctrine.orm.entity_manager", "@knp_menu.factory"]
-
-    alpixel_menu.main_menu:
-        class: Knp\Menu\MenuItem # the service definition requires setting the class
-        factory: ["@alpixel_menu.builder", createKnpMenu]
-        arguments:
-            - "main"
-        tags:
-            - { name: knp_menu.menu, alias: main }
+       arguments: ["@request_stack", "@doctrine.orm.entity_manager", "@knp_menu.factory"]

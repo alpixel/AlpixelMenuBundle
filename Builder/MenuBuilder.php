@@ -7,10 +7,12 @@ use Alpixel\Bundle\MenuBundle\Model\ItemInterface;
 use Doctrine\ORM\EntityManager;
 use Knp\Menu\FactoryInterface;
 use Knp\Menu\MenuItem as KnpMenuItem;
+use Symfony\Component\HttpFoundation\RequestStack;
 use UnexpectedValueException;
 
 class MenuBuilder
 {
+    protected $currentUri;
     protected $entityManager;
     protected $factory;
     protected $knpMenu;
@@ -22,10 +24,13 @@ class MenuBuilder
      * @param EntityManager    $entityManager
      * @param FactoryInterface $factory
      */
-    public function __construct(EntityManager $entityManager, FactoryInterface $factory)
+    public function __construct(RequestStack $requestStack, EntityManager $entityManager, FactoryInterface $factory)
     {
         $this->entityManager = $entityManager;
         $this->factory = $factory;
+
+        $request = $requestStack->getCurrentRequest();
+        $this->currentUri = $request->getRequestUri();
     }
 
     /**
@@ -139,9 +144,11 @@ class MenuBuilder
         $this->setKnpMenu($this->factory->createItem('root'));
 
         $menu = $this->entityManager
-            ->getRepository('AlpixelMenuBundle:Menu')
-            ->findOneMenuByMachineNameAndLocale($machineName, $locale);
+                     ->getRepository('AlpixelMenuBundle:Menu')
+                     ->findOneMenuByMachineNameAndLocale($machineName, $locale);
+
         $items = $menu->getItems()->toArray();
+
         foreach ($items as $item) {
             if ($item->getParent() === null) {
                 $this->getTree($this->knpMenu, $item);
@@ -169,6 +176,9 @@ class MenuBuilder
         }
 
         foreach ($item->getChildren() as $child) {
+            if ($this->currentUri == $child->getUri()) {
+                $this->setParentActive($child->getParent());
+            }
             $this->getTree($knpMenu, $child, $menuItem);
         }
 

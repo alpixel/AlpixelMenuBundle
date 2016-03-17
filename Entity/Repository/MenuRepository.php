@@ -9,7 +9,7 @@ class MenuRepository extends EntityRepository
     public function findOneMenuByMachineNameAndLocale($machineName, $locale)
     {
         return $this->createQueryBuilder('m')
-            ->join('m.items', 'i')
+            ->leftJoin('m.items', 'i')
             ->where('m.machineName = :machineName')
             ->andWhere('m.locale = :locale')
             ->setParameters([
