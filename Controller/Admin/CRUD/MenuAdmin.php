@@ -9,9 +9,6 @@ use Sonata\AdminBundle\Route\RouteCollection;
 
 class MenuAdmin extends Admin
 {
-    // protected $baseRouteName    = 'app_admin_cms_menu';
-    // protected $baseRoutePattern = 'cms/menu';
-
     public function createQuery($context = 'list')
     {
         $query = parent::createQuery($context);
