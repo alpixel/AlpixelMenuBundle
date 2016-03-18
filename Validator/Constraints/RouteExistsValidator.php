@@ -36,8 +36,6 @@ class RouteExistsValidator extends ConstraintValidator
             }
         }
 
-        dump($match);
-
         if ($match === false) {
             $this->context->buildViolation($constraint->message)
                 ->setParameter('%string%', $value)
