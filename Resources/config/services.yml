@@ -20,6 +20,14 @@ services:
         arguments:
             - ~
             - Alpixel\Bundle\MenuBundle\Entity\Item
-            - ~
+            - "PixSortableBehaviorBundle:SortableAdmin"
         calls:
             - [ setTemplate, [edit, AlpixelMenuBundle:CRUD:edit__item.html.twig]]
+            - [ setPositionService, ["@pix_sortable_behavior.position"]]
+
+    gedmo.listener.sortable:
+        class: Gedmo\Sortable\SortableListener
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }
+        calls:
+            - [ setAnnotationReader, [ "@annotation_reader" ] ]

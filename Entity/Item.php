@@ -37,6 +37,8 @@ class Item implements ItemInterface
     protected $children;
 
     /**
+     * @Gedmo\SortableGroup
+     *
      * @ORM\ManyToOne(targetEntity="Alpixel\Bundle\MenuBundle\Entity\Menu", inversedBy="items")
      * @ORM\JoinColumn(name="menu_id", referencedColumnName="menu_id")
      */
