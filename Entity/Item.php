@@ -4,6 +4,7 @@ namespace Alpixel\Bundle\MenuBundle\Entity;
 
 use Alpixel\Bundle\MenuBundle\Model\ItemInterface;
 use Alpixel\Bundle\MenuBundle\Model\MenuInterface;
+use Alpixel\Bundle\MenuBundle\Validator\Constraints\RouteExists;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -52,8 +53,7 @@ class Item implements ItemInterface
     protected $name;
 
     /**
-     * @var string
-     *
+     * @RouteExists
      * @ORM\Column(name="uri", type="text", nullable=false)
      */
     protected $uri;

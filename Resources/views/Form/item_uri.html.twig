@@ -1,6 +1,7 @@
 {% block form_row %}
     <div class="form-group">
         {{ form_label(form) }}
+        {{ form_errors(form) }}
         <div class="row">
             <div class="col-xs-1">
                 <select name="uri_type">

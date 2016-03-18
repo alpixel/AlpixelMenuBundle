@@ -31,3 +31,9 @@ services:
             - { name: doctrine.event_subscriber, connection: default }
         calls:
             - [ setAnnotationReader, [ "@annotation_reader" ] ]
+
+    alpixel_menu.validator.unique.route_exists:
+        class: Alpixel\Bundle\MenuBundle\Validator\Constraints\RouteExistsValidator
+        arguments: ["@router"]
+        tags:
+            - { name: validator.constraint_validator, alias: "route_exists_validator" }
