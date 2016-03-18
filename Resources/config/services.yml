@@ -2,3 +2,24 @@ services:
     alpixel_menu.builder:
        class: Alpixel\Bundle\MenuBundle\Builder\MenuBuilder
        arguments: ["@request_stack", "@doctrine.orm.entity_manager", "@knp_menu.factory"]
+
+    # SonataAdmin
+    alpixel_menu.admin.menu:
+        class: Alpixel\Bundle\MenuBundle\Controller\Admin\CRUD\MenuAdmin
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: 'CMS', label: 'Gestion des menus'}
+        arguments:
+            - ~
+            - Alpixel\Bundle\MenuBundle\Entity\Menu
+            - AlpixelMenuBundle:CRUD
+
+    alpixel_menu.admin.item:
+        class: Alpixel\Bundle\MenuBundle\Controller\Admin\CRUD\ItemAdmin
+        tags:
+            - {name: sonata.admin, manager_type: orm, show_in_dashboard: false}
+        arguments:
+            - ~
+            - Alpixel\Bundle\MenuBundle\Entity\Item
+            - ~
+        calls:
+            - [ setTemplate, [edit, AlpixelMenuBundle:CRUD:edit__item.html.twig]]

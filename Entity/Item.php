@@ -10,7 +10,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Table(name="alpixel_menu_item")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Alpixel\Bundle\MenuBundle\Entity\Repository\ItemRepository")
  */
 class Item implements ItemInterface
 {
