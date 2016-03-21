@@ -2,3 +2,38 @@ services:
     alpixel_menu.builder:
        class: Alpixel\Bundle\MenuBundle\Builder\MenuBuilder
        arguments: ["@request_stack", "@doctrine.orm.entity_manager", "@knp_menu.factory"]
+
+    # SonataAdmin
+    alpixel_menu.admin.menu:
+        class: Alpixel\Bundle\MenuBundle\Controller\Admin\CRUD\MenuAdmin
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: 'CMS', label: 'Gestion des menus'}
+        arguments:
+            - ~
+            - Alpixel\Bundle\MenuBundle\Entity\Menu
+            - AlpixelMenuBundle:CRUD
+
+    alpixel_menu.admin.item:
+        class: Alpixel\Bundle\MenuBundle\Controller\Admin\CRUD\ItemAdmin
+        tags:
+            - {name: sonata.admin, manager_type: orm, show_in_dashboard: false}
+        arguments:
+            - ~
+            - Alpixel\Bundle\MenuBundle\Entity\Item
+            - "PixSortableBehaviorBundle:SortableAdmin"
+        calls:
+            - [ setTemplate, [edit, AlpixelMenuBundle:CRUD:edit__item.html.twig]]
+            - [ setPositionService, ["@pix_sortable_behavior.position"]]
+
+    gedmo.listener.sortable:
+        class: Gedmo\Sortable\SortableListener
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }
+        calls:
+            - [ setAnnotationReader, [ "@annotation_reader" ] ]
+
+    alpixel_menu.validator.unique.route_exists:
+        class: Alpixel\Bundle\MenuBundle\Validator\Constraints\RouteExistsValidator
+        arguments: ["@router"]
+        tags:
+            - { name: validator.constraint_validator, alias: "route_exists_validator" }

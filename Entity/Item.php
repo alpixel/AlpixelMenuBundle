@@ -4,13 +4,14 @@ namespace Alpixel\Bundle\MenuBundle\Entity;
 
 use Alpixel\Bundle\MenuBundle\Model\ItemInterface;
 use Alpixel\Bundle\MenuBundle\Model\MenuInterface;
+use Alpixel\Bundle\MenuBundle\Validator\Constraints\RouteExists;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Table(name="alpixel_menu_item")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Alpixel\Bundle\MenuBundle\Entity\Repository\ItemRepository")
  */
 class Item implements ItemInterface
 {
@@ -37,6 +38,8 @@ class Item implements ItemInterface
     protected $children;
 
     /**
+     * @Gedmo\SortableGroup
+     *
      * @ORM\ManyToOne(targetEntity="Alpixel\Bundle\MenuBundle\Entity\Menu", inversedBy="items")
      * @ORM\JoinColumn(name="menu_id", referencedColumnName="menu_id")
      */
@@ -50,8 +53,7 @@ class Item implements ItemInterface
     protected $name;
 
     /**
-     * @var string
-     *
+     * @RouteExists
      * @ORM\Column(name="uri", type="text", nullable=false)
      */
     protected $uri;
