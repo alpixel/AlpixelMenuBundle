@@ -174,7 +174,7 @@ class MenuBuilder
         $menuItem = ($parent === null) ? $knpMenu->addChild($item) : $parent->addChild($item);
 
         if (($uri = $item->getUri()) !== null) {
-            if($uri[0] == '/') {
+            if ($uri[0] == '/') {
                 $baseUri = $this->request->getBasePath().
                            $this->request->getBaseURL().
                            $uri;
@@ -189,7 +189,7 @@ class MenuBuilder
 
         $menuItem->setAttributes([
             'position' => $item->getPosition(),
-            'slug' => $item->getSlug()
+            'slug'     => $item->getSlug(),
         ]);
 
         foreach ($item->getChildren() as $child) {
@@ -198,6 +198,7 @@ class MenuBuilder
             }
             $this->getTree($knpMenu, $child, $menuItem);
         }
+
         return $menuItem;
     }
 }
