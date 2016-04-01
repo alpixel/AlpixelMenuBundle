@@ -55,33 +55,44 @@ class ItemAdmin extends Admin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $id = $this->getRequest()->query->getInt('menu');
+        $isNew  = ($this->id($this->getSubject()) === null) ? false : true;
+
+        if ($isNew === false) {
+            $formMapper
+                ->add('menu', null, [
+                    'label'         => 'Menu',
+                    'required'      => true,
+                    'property'      => 'name',
+                    'query_builder' => function(EntityRepository $entityRepository) use ($id) {
+                        $query = $entityRepository->createQuerybuilder('m');
+                        if ($id == null) {
+                            return $query;
+                        }
+
+                        return $query
+                            ->where('m.id = :id')
+                            ->setParameter('id', $id);
+                    }
+                ]);
+        }
 
         $formMapper
-            ->add('menu', null, [
-                'label'         => 'Menu',
-                'required'      => true,
-                'property'      => 'name',
-                'query_builder' => function(EntityRepository $entityRepository) use ($id) {
-                    $query = $entityRepository->createQuerybuilder('m');
-                    if ($id == null) {
-                        return $query;
-                    }
-
-                    return $query
-                        ->where('m.id = :id')
-                        ->setParameter('id', $id);
-                }
-            ])
             ->add('parent', null, [
                 'label'    => 'Item parent',
                 'required' => false,
                 'property' => 'name'
-            ])
-            ->add('children', null, [
-                'label'    => 'Item enfant',
-                'required' => false,
-                'property' => 'name'
-            ])
+            ]);
+
+        if ($isNew === false) {
+            $formMapper
+                ->add('children', null, [
+                    'label'    => 'Item enfant',
+                    'required' => false,
+                    'property' => 'name'
+                ]);
+        }
+
+        $formMapper
             ->add('name', null, [
                 'label'    => 'Nom du menu à afficher',
                 'required' => true,
