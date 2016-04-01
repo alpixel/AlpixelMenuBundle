@@ -81,18 +81,7 @@ class ItemAdmin extends Admin
                 'label'    => 'Item parent',
                 'required' => false,
                 'property' => 'name',
-            ]);
-
-        if ($isNew === false) {
-            $formMapper
-                ->add('children', null, [
-                    'label'    => 'Item enfant',
-                    'required' => false,
-                    'property' => 'name',
-                ]);
-        }
-
-        $formMapper
+            ])
             ->add('name', null, [
                 'label'    => 'Nom du menu à afficher',
                 'required' => true,
