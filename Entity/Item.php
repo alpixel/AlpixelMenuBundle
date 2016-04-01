@@ -71,7 +71,6 @@ class Item implements ItemInterface
      **/
     protected $slug;
 
-
     public function __construct()
     {
         $this->children = new ArrayCollection();
