@@ -28,8 +28,9 @@
     {% import _self as knp_menu %}
 
     {% set isActive = (matcher.isCurrent(item) or matcher.isAncestor(item, 5)) %}
+
+    {% set linkAttribute = item.linkAttributes %}
     {% if isActive %}
-        {% set linkAttribute = item.linkAttributes %}
         {% set linkAttribute = linkAttribute|merge({'class': (item.linkAttributes.class|default('') ~ ' active')|trim}) %}
     {% endif %}
 
