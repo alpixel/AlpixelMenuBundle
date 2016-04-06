@@ -77,6 +77,21 @@ class ItemAdmin extends Admin
         }
 
         $formMapper
+            ->add('menu', null, [
+                'label'         => 'Menu',
+                'required'      => true,
+                'property'      => 'name',
+                'query_builder' => function (EntityRepository $entityRepository) use ($id) {
+                    $query = $entityRepository->createQuerybuilder('m');
+                    if ($id == null) {
+                        return $query;
+                    }
+
+                    return $query
+                        ->where('m.id = :id')
+                        ->setParameter('id', $id);
+                },
+            ])
             ->add('parent', null, [
                 'label'    => 'Item parent',
                 'required' => false,
