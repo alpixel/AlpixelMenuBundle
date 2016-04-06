@@ -37,3 +37,8 @@ services:
         arguments: ["@router"]
         tags:
             - { name: validator.constraint_validator, alias: "route_exists_validator" }
+
+    alpixel_menu.twig.extension.menu_link:
+        class: Alpixel\Bundle\MenuBundle\Twig\DisplayLinkExtension
+        tags:
+            - { name: twig.extension }
