@@ -34,7 +34,7 @@
         {% set linkAttribute = linkAttribute|merge({'class': (item.linkAttributes.class|default('') ~ ' active')|trim}) %}
     {% endif %}
 
-    <a href="{{ item.uri }}"{{ knp_menu.attributes(linkAttribute) }}>
+    <a href="{{ alpixel_menu_link(item.uri) }}"{{ knp_menu.attributes(linkAttribute) }}>
         {% if item.attribute('icon') is not empty  %}
             <i class="fa fa-{{ item.attribute('icon') }}"></i>
         {% endif %}
