@@ -26,44 +26,42 @@ class MenuAdmin extends Admin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->add('name', null, array(
+            ->add('name', null, [
                 'label'    => 'Label',
                 'required' => true,
-            ))
-            ->add('locale', 'choice', array( //@Todo Replace choices by $container->getParameter('lunetics_locale.allowed_locales');
+            ])
+            ->add('locale', 'choice', [ //@Todo Replace choices by $container->getParameter('lunetics_locale.allowed_locales');
                 'label'   => 'Langue',
-                'choices' => array(
+                'choices' => [
                     'fr' => 'fr',
                     'en' => 'en',
                     'it' => 'it',
-                ),
+                ],
                 'required' => true,
-            ))
-        ;
+            ]);
     }
 
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->add('machineName', null, array(
+            ->add('machineName', null, [
                 'label'    => 'Nom de la machine',
                 'required' => true,
-            ))
-            ->add('name', null, array(
+            ])
+            ->add('name', null, [
                 'label'    => 'Label',
                 'required' => true,
-            ))
-            ->add('locale', null, array(
+            ])
+            ->add('locale', null, [
                 'label'    => 'Langue',
                 'required' => true,
-            ))
-            ->add('_action', 'actions', array(
-                'actions' => array(
-                    'item' => array(
-                        'template' => 'AlpixelMenuBundle:CRUD:list__action_item.html.twig'
-                    )
-                )
-            ))
-        ;
+            ])
+            ->add('_action', 'actions', [
+                'actions' => [
+                    'item' => [
+                        'template' => 'AlpixelMenuBundle:CRUD:list__action_item.html.twig',
+                    ],
+                ],
+            ]);
     }
 }

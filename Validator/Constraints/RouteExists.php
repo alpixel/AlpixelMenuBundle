@@ -9,7 +9,6 @@ use Symfony\Component\Validator\Constraint;
  */
 class RouteExists extends Constraint
 {
-
     public $message = 'L\'url "%string%" n\'existe pas.';
 
     public function validatedBy()

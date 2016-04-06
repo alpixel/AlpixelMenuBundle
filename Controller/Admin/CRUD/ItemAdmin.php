@@ -13,9 +13,9 @@ class ItemAdmin extends Admin
     public $last_position = 0;
 
     protected $datagridValues = [
-        '_page' => 1,
+        '_page'       => 1,
         '_sort_order' => 'ASC',
-        '_sort_by' => 'position',
+        '_sort_by'    => 'position',
     ];
 
     public function setPositionService(\Pix\SortableBehaviorBundle\Services\PositionHandler $positionHandler)
@@ -61,7 +61,7 @@ class ItemAdmin extends Admin
                 'label'         => 'Menu',
                 'required'      => true,
                 'property'      => 'name',
-                'query_builder' => function(EntityRepository $entityRepository) use ($id) {
+                'query_builder' => function (EntityRepository $entityRepository) use ($id) {
                     $query = $entityRepository->createQuerybuilder('m');
                     if ($id == null) {
                         return $query;
@@ -70,17 +70,17 @@ class ItemAdmin extends Admin
                     return $query
                         ->where('m.id = :id')
                         ->setParameter('id', $id);
-                }
+                },
             ])
             ->add('parent', null, [
                 'label'    => 'Item parent',
                 'required' => false,
-                'property' => 'name'
+                'property' => 'name',
             ])
             ->add('children', null, [
                 'label'    => 'Item enfant',
                 'required' => false,
-                'property' => 'name'
+                'property' => 'name',
             ])
             ->add('name', null, [
                 'label'    => 'Nom du menu à afficher',
@@ -89,8 +89,7 @@ class ItemAdmin extends Admin
             ->add('uri', 'text', [
                 'label'    => 'URI',
                 'required' => true,
-            ])
-        ;
+            ]);
     }
 
     protected function configureListFields(ListMapper $listMapper)
@@ -110,14 +109,13 @@ class ItemAdmin extends Admin
                 'label'    => 'Position',
                 'required' => true,
             ])
-            ->add('_action', 'actions', array(
+            ->add('_action', 'actions', [
                 'actions' => [
                     'edit' => [],
                     'move' => [
-                        'template' => 'PixSortableBehaviorBundle:Default:_sort.html.twig'
+                        'template' => 'PixSortableBehaviorBundle:Default:_sort.html.twig',
                     ],
-                ]
-            ))
-        ;
+                ],
+            ]);
     }
 }
