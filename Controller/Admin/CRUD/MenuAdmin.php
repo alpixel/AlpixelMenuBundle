@@ -19,26 +19,38 @@ class MenuAdmin extends Admin
 
     protected function configureRoutes(RouteCollection $collection)
     {
-        $collection->clearExcept(['list']);
+        $collection->remove('create');
         $collection->add('item', $this->getRouterIdParameter().'/item');
     }
 
     protected function configureFormFields(FormMapper $formMapper)
     {
+        $container = $this->getConfigurationPool()->getContainer();
+        $locales = $container->getParameter('lunetics_locale.allowed_locales');
+        $locales = array_combine($locales, $locales);
+
         $formMapper
             ->add('name', null, [
                 'label'    => 'Label',
                 'required' => true,
-            ])
-            ->add('locale', 'choice', [ //@Todo Replace choices by $container->getParameter('lunetics_locale.allowed_locales');
-                'label'   => 'Langue',
-                'choices' => [
-                    'fr' => 'fr',
-                    'en' => 'en',
-                    'it' => 'it',
-                ],
-                'required' => true,
             ]);
+
+        $security = $this->getSecurityHandler();
+        $isAuthorized = $security->isGranted($this, 'ROLE_SUPER_ADMIN');
+
+        if ($isAuthorized) {
+            $formMapper
+                ->add('locale', 'choice', [
+                    'label'    => 'Langue',
+                    'choices'  => $locales,
+                    'required' => true,
+                ])
+                ->add('machineName', null, [
+                    'label'    => 'Nom de la machine',
+                    'required' => true,
+                ]);
+        }
+
     }
 
     protected function configureListFields(ListMapper $listMapper)
@@ -61,6 +73,10 @@ class MenuAdmin extends Admin
                     'item' => [
                         'template' => 'AlpixelMenuBundle:CRUD:list__action_item.html.twig',
                     ],
+<<<<<<< HEAD
+=======
+                    'edit' => [],
+>>>>>>> master
                 ],
             ]);
     }

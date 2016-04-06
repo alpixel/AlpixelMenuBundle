@@ -19,21 +19,23 @@ class RouteExistsValidator extends ConstraintValidator
     {
         $match = false;
         if (strpos($value, '/') === 0) {
-            $routeCollection = $this->router->getRouteCollection()->all();
-            foreach ($routeCollection as $name => $route) {
-                if ($match = $route->getPath() === $value) {
-                    break;
-                }
-            }
-        } else {
-            $handle = curl_init($value);
-            curl_setopt($handle, CURLOPT_RETURNTRANSFER, true);
-            $response = curl_exec($handle);
-            $httpCode = curl_getinfo($handle, CURLINFO_HTTP_CODE);
+            $context = $this->router->getContext();
+            $baseUrl = $context->getScheme().'://'.$context->getHost().$context->getBaseUrl();
+            $value = $baseUrl.$value;
+        }
 
-            if ($httpCode >= 200 && $httpCode < 300) {
-                $match = true;
-            }
+        $handle = curl_init($value);
+        curl_setopt($handle, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($handle, CURLOPT_HEADER, true);
+        curl_setopt($handle, CURLOPT_NOBODY, true);
+        curl_setopt($handle, CURLOPT_CONNECTTIMEOUT, 2);
+        curl_exec($handle);
+        $httpCode = curl_getinfo($handle, CURLINFO_HTTP_CODE);
+
+        // $httpCode >= 200 && $httpCode < 300 for all http request accepted
+        // $httpCode === 401 for page with authentification required
+        if ($httpCode >= 200 && $httpCode < 300 || $httpCode === 401) {
+            $match = true;
         }
 
         if ($match === false) {
