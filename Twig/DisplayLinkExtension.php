@@ -12,10 +12,11 @@ class DisplayLinkExtension extends \Twig_Extension
     }
 
     /**
-     * Add app_dev.php in dev environment if the link is locale
+     * Add app_dev.php in dev environment if the link is locale.
      *
      * @param \Twig_Environment $twig
      * @param $link
+     *
      * @return string
      */
     public function menuLink(\Twig_Environment $twig, $link)
