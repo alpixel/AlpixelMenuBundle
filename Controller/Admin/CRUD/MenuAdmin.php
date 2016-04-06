@@ -73,10 +73,6 @@ class MenuAdmin extends Admin
                     'item' => [
                         'template' => 'AlpixelMenuBundle:CRUD:list__action_item.html.twig',
                     ],
-<<<<<<< HEAD
-=======
-                    'edit' => [],
->>>>>>> master
                 ],
             ]);
     }
