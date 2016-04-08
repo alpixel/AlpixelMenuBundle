@@ -20,7 +20,7 @@ services:
         arguments:
             - ~
             - Alpixel\Bundle\MenuBundle\Entity\Item
-            - "PixSortableBehaviorBundle:SortableAdmin"
+            - AlpixelMenuBundle:CRUD
         calls:
             - [ setTemplate, [edit, AlpixelMenuBundle:CRUD:edit__item.html.twig]]
             - [ setPositionService, ["@pix_sortable_behavior.position"]]

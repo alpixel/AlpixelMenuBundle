@@ -8,6 +8,7 @@ use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
+use Symfony\Component\HttpFoundation\Request;
 
 class ItemAdmin extends Admin
 {
@@ -27,28 +28,52 @@ class ItemAdmin extends Admin
     protected function configureRoutes(RouteCollection $collection)
     {
         $collection->add('move', $this->getRouterIdParameter().'/move/{position}');
+        $collection->add('item', $this->getRouterIdParameter().'/item');
     }
 
     public function getPersistentParameters()
     {
-        if (!$this->getRequest()) {
-            return [];
+        $parameters = [];
+        if ($this->getRequest() instanceof Request) {
+            $query = $this->getRequest()->query;
+            if ($query->has('menu')) {
+                $parameters['menu'] = $query->getInt('menu');
+            }
+
+            if ($query->has('item')) {
+                $parameters['item'] = $query->getInt('item');
+            }
         }
 
-        return [
-            'menu' => $this->getRequest()->query->getInt('menu'),
-        ];
+        return $parameters;
     }
 
     public function createQuery($context = 'list')
     {
-        $id = $this->getRequest()->query->getInt('menu');
         $query = parent::createQuery($context);
-        $query->join($query->getRootAlias().'.menu', 'm')
-            ->where('m.id = :id')
-            ->setParameters([
-                'id' => $id,
-            ]);
+        if ($this->getRequest() instanceof Request) {
+            $requestQuery = $this->getRequest()->query;
+            if ($requestQuery->has('menu')) {
+                $menuId = $requestQuery->getInt('menu');
+                $query
+                    ->join($query->getRootAlias().'.menu', 'm')
+                    ->leftJoin($query->getRootAlias().'.parent', 'p')
+                    ->where('m.id = :menuId')
+                    ->andwhere('p.id IS NULL')
+                    ->setParameters([
+                        'menuId' => $menuId,
+                    ]);
+            }
+
+            if ($requestQuery->has('item')) {
+                $parentId = $requestQuery->getInt('item');
+                $query->join($query->getRootAlias() . '.parent', 'p')
+                    ->andWhere('p.id = :parentId')
+                    ->setParameters([
+                        'parentId' => $parentId,
+                    ]);
+            }
+        }
 
         return $query;
     }
@@ -130,6 +155,9 @@ class ItemAdmin extends Admin
                     'edit' => [],
                     'move' => [
                         'template' => 'PixSortableBehaviorBundle:Default:_sort.html.twig',
+                    ],
+                    'item' => [
+                        'template' => 'AlpixelMenuBundle:CRUD:list__action_item.html.twig',
                     ],
                 ],
             ]);

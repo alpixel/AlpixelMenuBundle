@@ -2,8 +2,9 @@
 
 namespace Alpixel\Bundle\MenuBundle\Controller;
 
+use Alpixel\Bundle\MenuBundle\Entity\Item;
 use Alpixel\Bundle\MenuBundle\Entity\Menu;
-use Sonata\AdminBundle\Controller\CRUDController as Controller;
+use Pix\SortableBehaviorBundle\Controller\SortableAdminController as Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -12,14 +13,17 @@ class CRUDController extends Controller
 {
     public function itemAction()
     {
-        $menu = $this->admin->getSubject();
+        $object     = $this->admin->getSubject();
+        $router     = $this->container->get('router');
+        $parameters = [];
 
-        if (!$menu instanceof Menu) {
-            throw new NotFoundHttpException('Unable to find the object');
+        if ($object instanceof Menu) {
+            $parameters['menu'] = $object->getId();
+        } else if ($object instanceof Item) {
+            $parameters['item'] = $object->getId();
         }
 
-        $router = $this->container->get('router');
-        $url = $router->generate('admin_alpixel_menu_item_list', ['menu' => $menu->getId()], UrlGeneratorInterface::ABSOLUTE_PATH);
+        $url = $router->generate('admin_alpixel_menu_item_list', $parameters, UrlGeneratorInterface::ABSOLUTE_PATH);
 
         return new RedirectResponse($url);
     }
