@@ -34,9 +34,13 @@ services:
 
     alpixel_menu.validator.unique.route_exists:
         class: Alpixel\Bundle\MenuBundle\Validator\Constraints\RouteExistsValidator
-        arguments: ["@router"]
+        arguments: ["@alpixel_menu.utils.url_checker"]
         tags:
             - { name: validator.constraint_validator, alias: "route_exists_validator" }
+
+    alpixel_menu.utils.url_checker:
+        class: Alpixel\Bundle\MenuBundle\Utils\URLChecker
+        arguments: ["@router"]
 
     alpixel_menu.twig.extension.menu_link:
         class: Alpixel\Bundle\MenuBundle\Twig\DisplayLinkExtension

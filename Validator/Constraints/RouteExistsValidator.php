@@ -2,40 +2,26 @@
 
 namespace Alpixel\Bundle\MenuBundle\Validator\Constraints;
 
-use Symfony\Bundle\FrameworkBundle\Routing\Router;
+use Alpixel\Bundle\MenuBundle\Utils\URLChecker;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
 class RouteExistsValidator extends ConstraintValidator
 {
-    private $router;
+    private $checker;
+    private $session;
 
-    public function __construct(Router $router)
+    public function __construct(URLChecker $checker)
     {
-        $this->router = $router;
+        $this->checker = $checker;
     }
 
     public function validate($value, Constraint $constraint)
     {
-        $match = false;
-        if (strpos($value, '/') === 0) {
-            $context = $this->router->getContext();
-            $baseUrl = $context->getScheme().'://'.$context->getHost().$context->getBaseUrl();
-            $value = $baseUrl.$value;
-        }
-
-        $handle = curl_init($value);
-        curl_setopt($handle, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($handle, CURLOPT_HEADER, true);
-        curl_setopt($handle, CURLOPT_NOBODY, true);
-        curl_setopt($handle, CURLOPT_CONNECTTIMEOUT, 2);
-        curl_exec($handle);
-        $httpCode = curl_getinfo($handle, CURLINFO_HTTP_CODE);
-
-        // $httpCode >= 200 && $httpCode < 300 for all http request accepted
-        // $httpCode === 401 for page with authentification required
-        if ($httpCode >= 200 && $httpCode < 300 || $httpCode === 401) {
-            $match = true;
+        $match = true;
+        $code = $this->checker->check($value);
+        if ($code === URLChecker::URL_NOT_FOUND) {
+            $match = false;
         }
 
         if ($match === false) {
