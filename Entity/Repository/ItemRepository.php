@@ -15,6 +15,7 @@ class ItemRepository extends EntityRepository
             ->setParameters([
                 'id' => $menu->getId(),
             ])
+            ->addOrderBy('i.position', 'ASC')
             ->getQuery()
             ->getResult();
     }
