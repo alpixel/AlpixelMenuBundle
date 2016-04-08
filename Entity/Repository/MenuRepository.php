@@ -16,7 +16,6 @@ class MenuRepository extends EntityRepository
                 'machineName' => $machineName,
                 'locale'      => $locale,
             ])
-            ->addOrderBy('m.position', 'ASC')
             ->getQuery()
             ->getSingleResult();
     }
