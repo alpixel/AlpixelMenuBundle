@@ -27,4 +27,22 @@ class CRUDController extends Controller
 
         return new RedirectResponse($url);
     }
+
+    public function parentItemAction()
+    {
+        $object     = $this->admin->getSubject();
+        $router     = $this->container->get('router');
+        $route      = '';
+        
+        if ($object instanceof Item) {
+            $parameters['item'] = $object->getId();
+            $route = 'admin_alpixel_menu_item_list';
+        } else if ($object instanceof Menu) {
+            $route = 'admin_alpixel_menu_list';
+        }
+
+        $url = $router->generate($route, $parameters, UrlGeneratorInterface::ABSOLUTE_PATH);
+
+        return new RedirectResponse($url);
+    }
 }

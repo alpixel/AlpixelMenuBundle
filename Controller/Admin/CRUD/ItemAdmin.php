@@ -29,6 +29,7 @@ class ItemAdmin extends Admin
     {
         $collection->add('move', $this->getRouterIdParameter().'/move/{position}');
         $collection->add('item', $this->getRouterIdParameter().'/item');
+        $collection->add('parentItem', $this->getRouterIdParameter().'/item');
     }
 
     public function getPersistentParameters()
@@ -39,8 +40,7 @@ class ItemAdmin extends Admin
             if ($query->has('menu')) {
                 $parameters['menu'] = $query->getInt('menu');
             }
-
-            if ($query->has('item')) {
+            else if ($query->has('item')) {
                 $parameters['item'] = $query->getInt('item');
             }
         }
@@ -63,9 +63,7 @@ class ItemAdmin extends Admin
                     ->setParameters([
                         'menuId' => $menuId,
                     ]);
-            }
-
-            if ($requestQuery->has('item')) {
+            } else if ($requestQuery->has('item')) {
                 $parentId = $requestQuery->getInt('item');
                 $query->join($query->getRootAlias() . '.parent', 'p')
                     ->andWhere('p.id = :parentId')
@@ -159,6 +157,9 @@ class ItemAdmin extends Admin
                     'item' => [
                         'template' => 'AlpixelMenuBundle:CRUD:list__action_item.html.twig',
                     ],
+                    'parentItem' => [
+                        'template' => 'AlpixelMenuBundle:CRUD:list__action_parent_item.html.twig'
+                    ]
                 ],
             ]);
     }

@@ -1,0 +1,8 @@
+{% if object.parent is defined %}
+    {# If the current object is an item and have parent (item) #}
+    {% if object.parent is not null and object.parent.parent is defined and object.parent.parent is not null %}
+        <a class="btn btn-primary btn-sm" href="{{ admin.generateObjectUrl('parentItem', object.parent.parent) }}">Revenir à l'élément parent</a>
+    {% elseif object.menu is defined and object.menu is not null %}
+        <a class="btn btn-primary btn-sm" href="{{path('admin_alpixel_menu_menu_list')}}">Revenir au menu</a>
+    {% endif %}
+{% endif %}
