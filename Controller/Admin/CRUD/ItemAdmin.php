@@ -67,7 +67,7 @@ class ItemAdmin extends Admin
 
             if ($requestQuery->has('item')) {
                 $parentId = $requestQuery->getInt('item');
-                $query->join($query->getRootAlias() . '.parent', 'p')
+                $query->join($query->getRootAlias().'.parent', 'p')
                     ->andWhere('p.id = :parentId')
                     ->setParameters([
                         'parentId' => $parentId,
@@ -166,9 +166,9 @@ class ItemAdmin extends Admin
     public function postUpdate($object = null)
     {
         if ($object !== null && $object->getUri() !== null) {
-            $container  = $this->getConfigurationPool()->getContainer();
-            $checker    = $container->get('alpixel_menu.utils.url_checker');
-            $url        = $object->getUri();
+            $container = $this->getConfigurationPool()->getContainer();
+            $checker = $container->get('alpixel_menu.utils.url_checker');
+            $url = $object->getUri();
             if ($checker->check($url) === URLChecker::URL_PROBLEM) {
                 $session = $container->get('session');
                 $session->getFlashBag()->add('warning', 'Cependant une erreur semble être apparue quand nous avons tenté d\'analyser la page "'.$url.'". Vous devriez vérifier que le lien spécifié n\'affiche aucune erreur.');
