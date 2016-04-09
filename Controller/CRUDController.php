@@ -6,20 +6,19 @@ use Alpixel\Bundle\MenuBundle\Entity\Item;
 use Alpixel\Bundle\MenuBundle\Entity\Menu;
 use Pix\SortableBehaviorBundle\Controller\SortableAdminController as Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class CRUDController extends Controller
 {
     public function itemAction()
     {
-        $object     = $this->admin->getSubject();
-        $router     = $this->container->get('router');
+        $object = $this->admin->getSubject();
+        $router = $this->container->get('router');
         $parameters = [];
 
         if ($object instanceof Menu) {
             $parameters['menu'] = $object->getId();
-        } else if ($object instanceof Item) {
+        } elseif ($object instanceof Item) {
             $parameters['item'] = $object->getId();
         }
 

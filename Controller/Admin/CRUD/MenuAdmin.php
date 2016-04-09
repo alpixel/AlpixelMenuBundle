@@ -50,7 +50,6 @@ class MenuAdmin extends Admin
                     'required' => true,
                 ]);
         }
-
     }
 
     protected function configureListFields(ListMapper $listMapper)

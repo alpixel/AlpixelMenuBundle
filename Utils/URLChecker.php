@@ -5,14 +5,13 @@ namespace Alpixel\Bundle\MenuBundle\Utils;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
 
 /**
- * Class URLChecker
- * @package Alpixel\Bundle\MenuBundle\Utils
+ * Class URLChecker.
  */
 class URLChecker
 {
-    const URL_VALID     = 0;
+    const URL_VALID = 0;
     const URL_NOT_FOUND = 1;
-    const URL_PROBLEM   = 2;
+    const URL_PROBLEM = 2;
 
     protected $router;
 
@@ -40,7 +39,7 @@ class URLChecker
         // $httpCode (success) >= 200 && $httpCode (redirect) < 310 for all http request accepted
         if ($httpCode >= 200 && $httpCode < 310) {
             return self::URL_VALID;
-        } else if ($httpCode === 404) {
+        } elseif ($httpCode === 404) {
             return self::URL_NOT_FOUND;
         }
 
