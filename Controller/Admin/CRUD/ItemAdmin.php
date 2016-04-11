@@ -91,7 +91,7 @@ class ItemAdmin extends Admin
                     'property'      => 'name',
                     'query_builder' => function (EntityRepository $entityRepository) use ($id) {
                         $query = $entityRepository->createQuerybuilder('m');
-                        if ($id === null) {
+                        if ($id === 0) {
                             return $query;
                         }
 
@@ -109,7 +109,7 @@ class ItemAdmin extends Admin
                 'property'      => 'name',
                 'query_builder' => function (EntityRepository $entityRepository) use ($id) {
                     $query = $entityRepository->createQuerybuilder('m');
-                    if ($id === null) {
+                    if ($id === 0) {
                         return $query;
                     }
 
