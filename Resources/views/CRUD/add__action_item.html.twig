@@ -1,0 +1,5 @@
+{% if object.children is defined  %}
+    <a class="btn btn-default btn-sm" href="{{ path('admin_alpixel_menu_item_create', {'create-menu' : object.menu.id, 'create-item': object.id}) }}"><i class="fa fa-plus"></i> Ajouter un élément</a>
+{% elseif object.items is defined %}
+    <a class="btn btn-default btn-sm" href="{{ path('admin_alpixel_menu_item_create', {'create-menu' : object.id}) }}"><i class="fa fa-plus"></i> Ajouter un élément</a>
+{% endif %}
