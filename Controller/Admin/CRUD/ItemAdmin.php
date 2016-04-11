@@ -80,26 +80,15 @@ class ItemAdmin extends Admin
 
     protected function configureFormFields(FormMapper $formMapper)
     {
-        $id = $this->getRequest()->query->getInt('menu');
-        $isNew = ($this->id($this->getSubject()) === null) ? false : true;
+        $subject = $this->getSubject();
+        $isNew   = ($this->id($subject) === null) ? true : false;
 
-        if ($isNew === false) {
-            $formMapper
-                ->add('menu', null, [
-                    'label'         => 'Menu',
-                    'required'      => true,
-                    'property'      => 'name',
-                    'query_builder' => function (EntityRepository $entityRepository) use ($id) {
-                        $query = $entityRepository->createQuerybuilder('m');
-                        if ($id === 0) {
-                            return $query;
-                        }
-
-                        return $query
-                            ->where('m.id = :id')
-                            ->setParameter('id', $id);
-                    },
-                ]);
+        if ($isNew === true) {
+            $idMenu = $this->getRequest()->query->getInt('create-menu');
+            $idItem = $this->getRequest()->query->getInt('create-item');
+        } else {
+            $idMenu  = $subject->getMenu()->getId();
+            $idItem  = ($subject->getParent() !== null) ? $subject->getParent()->getId() : 0;
         }
 
         $formMapper
@@ -107,22 +96,37 @@ class ItemAdmin extends Admin
                 'label'         => 'Menu',
                 'required'      => true,
                 'property'      => 'name',
-                'query_builder' => function (EntityRepository $entityRepository) use ($id) {
+                'query_builder' => function (EntityRepository $entityRepository) use ($idMenu) {
                     $query = $entityRepository->createQuerybuilder('m');
-                    if ($id === 0) {
+                    if ($idMenu === 0) {
                         return $query;
                     }
 
                     return $query
                         ->where('m.id = :id')
-                        ->setParameter('id', $id);
+                        ->setParameter('id', $idMenu);
                 },
-            ])
-            ->add('parent', null, [
+            ]);
+
+        if ($idItem === 0 && $idMenu === 0 || $isNew === false && $subject->getParent() !== null || $isNew === true && $idItem > 0) {
+            $formMapper->add('parent', null, [
                 'label'    => 'Item parent',
-                'required' => false,
+                'required' => true,
                 'property' => 'name',
-            ])
+                'query_builder' => function (EntityRepository $entityRepository) use ($idItem) {
+                    $query = $entityRepository->createQuerybuilder('i');
+                    if ($idItem === 0) {
+                        return $query;
+                    }
+
+                    return $query
+                        ->where('i.id = :id')
+                        ->setParameter('id', $idItem);
+                }
+            ]);
+        }
+
+        $formMapper
             ->add('name', null, [
                 'label'    => 'Nom du menu à afficher',
                 'required' => true,
@@ -153,6 +157,9 @@ class ItemAdmin extends Admin
             ->add('_action', 'actions', [
                 'actions' => [
                     'edit' => [],
+                    'add'  => [
+                        'template' => 'AlpixelMenuBundle:CRUD:add__action_item.html.twig',
+                    ],
                     'move' => [
                         'template' => 'PixSortableBehaviorBundle:Default:_sort.html.twig',
                     ],
