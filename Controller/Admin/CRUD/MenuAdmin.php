@@ -55,16 +55,12 @@ class MenuAdmin extends Admin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->add('machineName', null, [
-                'label'    => 'Nom de la machine',
+            ->add('locale', null, [
+                'label'    => 'Langue',
                 'required' => true,
             ])
             ->add('name', null, [
                 'label'    => 'Label',
-                'required' => true,
-            ])
-            ->add('locale', null, [
-                'label'    => 'Langue',
                 'required' => true,
             ])
             ->add('_action', 'actions', [
