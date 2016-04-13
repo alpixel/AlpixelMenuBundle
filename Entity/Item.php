@@ -34,6 +34,7 @@ class Item implements ItemInterface
 
     /**
      * @ORM\OneToMany(targetEntity="Alpixel\Bundle\MenuBundle\Entity\Item", mappedBy="parent")
+     * @ORM\OrderBy({"position": "ASC"})
      */
     protected $children;
 
@@ -151,7 +152,9 @@ class Item implements ItemInterface
      */
     public function getChildren()
     {
-        return $this->children;
+        $children = $this->children;
+
+        return $children;
     }
 
     /**

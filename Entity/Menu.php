@@ -23,7 +23,8 @@ class Menu implements MenuInterface
     protected $id;
 
     /**
-     * @ORM\OneToMany(targetEntity="Alpixel\Bundle\MenuBundle\Entity\Item", mappedBy="menu")
+     * @ORM\OneToMany(targetEntity="Alpixel\Bundle\MenuBundle\Entity\Item", mappedBy="menu", fetch="EAGER")
+     * @ORM\OrderBy({"position": "ASC"})
      */
     protected $items;
 

@@ -1,7 +1,11 @@
 services:
     alpixel_menu.builder:
        class: Alpixel\Bundle\MenuBundle\Builder\MenuBuilder
-       arguments: ["@request_stack", "@doctrine.orm.entity_manager", "@knp_menu.factory"]
+       arguments:
+            - "@knp_menu.manipulator"
+            - "@request_stack"
+            - "@doctrine.orm.entity_manager"
+            - "@knp_menu.factory"
 
     # SonataAdmin
     alpixel_menu.admin.menu:
