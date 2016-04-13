@@ -193,9 +193,6 @@ class MenuBuilder
         ]);
 
         foreach ($item->getChildren() as $child) {
-            if ($this->currentUri == $child->getUri()) {
-                $this->setParentActive($child->getParent());
-            }
             $this->getTree($knpMenu, $child, $menuItem);
         }
 
