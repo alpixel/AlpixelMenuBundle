@@ -39,7 +39,7 @@ class URLChecker
         // $httpCode (success) >= 200 && $httpCode (redirect) < 310 for all http request accepted
         if ($httpCode >= 200 && $httpCode < 310) {
             return self::URL_VALID;
-        } elseif ($httpCode === 404) {
+        } elseif ($httpCode === 404 || $httpCode === 0) {
             return self::URL_NOT_FOUND;
         }
 
