@@ -140,6 +140,10 @@ class MenuBuilder
             throw new UnexpectedValueException('The parameter $machineName must be a non empty string');
         }
 
+        if($locale === null && $this->request !== null) {
+            $locale = $this->request->getLocale();
+        }
+
         if ($locale === null) {
             $locale = $this->getDefaultLocale();
         } elseif (!self::isValidLocale($locale)) {
