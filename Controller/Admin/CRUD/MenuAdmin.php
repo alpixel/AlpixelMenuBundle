@@ -20,6 +20,7 @@ class MenuAdmin extends Admin
     protected function configureRoutes(RouteCollection $collection)
     {
         $collection->remove('create');
+        $collection->remove('delete');
         $collection->add('item', $this->getRouterIdParameter().'/item');
     }
 

@@ -53,7 +53,14 @@ class ItemAdmin extends Admin
         $query = parent::createQuery($context);
         if ($this->getRequest() instanceof Request) {
             $requestQuery = $this->getRequest()->query;
-            if ($requestQuery->has('menu')) {
+            if ($requestQuery->has('item')) {
+                $parentId = $requestQuery->getInt('item');
+                $query->join($query->getRootAlias().'.parent', 'p')
+                    ->andWhere('p.id = :parentId')
+                    ->setParameters([
+                        'parentId' => $parentId,
+                    ]);
+            } elseif ($requestQuery->has('menu')) {
                 $menuId = $requestQuery->getInt('menu');
                 $query
                     ->join($query->getRootAlias().'.menu', 'm')
@@ -62,15 +69,6 @@ class ItemAdmin extends Admin
                     ->andwhere('p.id IS NULL')
                     ->setParameters([
                         'menuId' => $menuId,
-                    ]);
-            }
-
-            if ($requestQuery->has('item')) {
-                $parentId = $requestQuery->getInt('item');
-                $query->join($query->getRootAlias().'.parent', 'p')
-                    ->andWhere('p.id = :parentId')
-                    ->setParameters([
-                        'parentId' => $parentId,
                     ]);
             }
         }
