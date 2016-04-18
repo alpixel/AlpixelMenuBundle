@@ -1,18 +1,9 @@
-{% set url = '' %}
-{% if app.request.query.has('menu') and app.request.query.has('item') %}
-    {% set url = path('admin_alpixel_menu_item_create', {
-        'create-menu' : app.request.query.get('menu'),
-        'create-item': app.request.query.get('item')})
-    %}
-{% elseif app.request.query.has('menu') %}
-    {% set url = path('admin_alpixel_menu_item_create', {
-        'create-menu' : app.request.query.get('menu')})
-    %}
-{% endif %}
-{% if url is not empty %}
+{% import 'AlpixelMenuBundle:CRUD:macro_add_item_link.html.twig' as item %}
+
+{% if item.add_link() is not empty %}
     <ul class="nav navbar-nav navbar-right">
         <li>
-            <a class="sonata-action-element" href="{{ url }}"><i class="fa fa-plus-circle"></i>Ajouter</a>
+            <a class="sonata-action-element" href="{{ item.add_link() }}"><i class="fa fa-plus-circle"></i>Ajouter</a>
         </li>
     </ul>
 {% endif %}
