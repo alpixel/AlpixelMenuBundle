@@ -155,9 +155,6 @@ class ItemAdmin extends Admin
             ->add('_action', 'actions', [
                 'actions' => [
                     'edit' => [],
-                    'add'  => [
-                        'template' => 'AlpixelMenuBundle:CRUD:add__action_item.html.twig',
-                    ],
                     'move' => [
                         'template' => 'PixSortableBehaviorBundle:Default:_sort.html.twig',
                     ],
