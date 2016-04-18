@@ -1,0 +1,9 @@
+{% import 'AlpixelMenuBundle:CRUD:macro_add_item_link.html.twig' as item %}
+
+{% if item.add_link() is not empty %}
+    <ul class="nav navbar-nav navbar-right">
+        <li>
+            <a class="sonata-action-element" href="{{ item.add_link() }}"><i class="fa fa-plus-circle"></i>Ajouter</a>
+        </li>
+    </ul>
+{% endif %}

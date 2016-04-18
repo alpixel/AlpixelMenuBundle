@@ -53,7 +53,14 @@ class ItemAdmin extends Admin
         $query = parent::createQuery($context);
         if ($this->getRequest() instanceof Request) {
             $requestQuery = $this->getRequest()->query;
-            if ($requestQuery->has('menu')) {
+            if ($requestQuery->has('item')) {
+                $parentId = $requestQuery->getInt('item');
+                $query->join($query->getRootAlias().'.parent', 'p')
+                    ->andWhere('p.id = :parentId')
+                    ->setParameters([
+                        'parentId' => $parentId,
+                    ]);
+            } elseif ($requestQuery->has('menu')) {
                 $menuId = $requestQuery->getInt('menu');
                 $query
                     ->join($query->getRootAlias().'.menu', 'm')
@@ -64,15 +71,6 @@ class ItemAdmin extends Admin
                         'menuId' => $menuId,
                     ]);
             }
-
-            if ($requestQuery->has('item')) {
-                $parentId = $requestQuery->getInt('item');
-                $query->join($query->getRootAlias().'.parent', 'p')
-                    ->andWhere('p.id = :parentId')
-                    ->setParameters([
-                        'parentId' => $parentId,
-                    ]);
-            }
         }
 
         return $query;
@@ -81,14 +79,14 @@ class ItemAdmin extends Admin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $subject = $this->getSubject();
-        $isNew   = ($this->id($subject) === null) ? true : false;
+        $isNew = ($this->id($subject) === null) ? true : false;
 
         if ($isNew === true) {
             $idMenu = $this->getRequest()->query->getInt('create-menu');
             $idItem = $this->getRequest()->query->getInt('create-item');
         } else {
-            $idMenu  = $subject->getMenu()->getId();
-            $idItem  = ($subject->getParent() !== null) ? $subject->getParent()->getId() : 0;
+            $idMenu = $subject->getMenu()->getId();
+            $idItem = ($subject->getParent() !== null) ? $subject->getParent()->getId() : 0;
         }
 
         $formMapper
@@ -110,9 +108,9 @@ class ItemAdmin extends Admin
 
         if ($idItem === 0 && $idMenu === 0 || $isNew === false && $subject->getParent() !== null || $isNew === true && $idItem > 0) {
             $formMapper->add('parent', null, [
-                'label'    => 'Item parent',
-                'required' => true,
-                'property' => 'name',
+                'label'         => 'Item parent',
+                'required'      => true,
+                'property'      => 'name',
                 'query_builder' => function (EntityRepository $entityRepository) use ($idItem) {
                     $query = $entityRepository->createQuerybuilder('i');
                     if ($idItem === 0) {
@@ -122,7 +120,7 @@ class ItemAdmin extends Admin
                     return $query
                         ->where('i.id = :id')
                         ->setParameter('id', $idItem);
-                }
+                },
             ]);
         }
 
@@ -157,9 +155,6 @@ class ItemAdmin extends Admin
             ->add('_action', 'actions', [
                 'actions' => [
                     'edit' => [],
-                    'add'  => [
-                        'template' => 'AlpixelMenuBundle:CRUD:add__action_item.html.twig',
-                    ],
                     'move' => [
                         'template' => 'PixSortableBehaviorBundle:Default:_sort.html.twig',
                     ],

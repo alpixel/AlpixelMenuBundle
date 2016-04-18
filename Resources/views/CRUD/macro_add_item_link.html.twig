@@ -1,0 +1,12 @@
+{% macro add_link() %}
+    {% spaceless %}
+        {% if app.request.query.has('menu') and app.request.query.has('item') %}
+            {{ path('admin_alpixel_menu_item_create', {
+                'create-menu' : app.request.query.get('menu'),
+                'create-item': app.request.query.get('item')}) }}
+        {% elseif app.request.query.has('menu') %}
+            {{ path('admin_alpixel_menu_item_create', {
+                'create-menu' : app.request.query.get('menu')}) }}
+        {% endif %}
+    {% endspaceless %}
+{% endmacro %}

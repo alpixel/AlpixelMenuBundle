@@ -27,6 +27,7 @@ services:
             - AlpixelMenuBundle:CRUD
         calls:
             - [ setTemplate, [edit, AlpixelMenuBundle:CRUD:edit__item.html.twig]]
+            - [ setTemplate, [list, AlpixelMenuBundle:CRUD:list_item.html.twig]]
             - [ setPositionService, ["@pix_sortable_behavior.position"]]
 
     gedmo.listener.sortable:
