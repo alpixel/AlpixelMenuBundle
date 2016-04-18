@@ -66,15 +66,14 @@ class CRUDController extends Controller
         if ($this->getRestMethod() === 'DELETE') {
             if ($object instanceof Item) {
                 $url = $this->admin->generateUrl('list', $params['list']);
-            }
-            else {
+            } else {
                 $router = $this->get('router');
-                $url= $router->generate('admin_alpixel_menu_menu_list');
+                $url = $router->generate('admin_alpixel_menu_menu_list');
             }
         }
 
         if (!$url) {
-            foreach (array('edit', 'show') as $route) {
+            foreach (['edit', 'show'] as $route) {
                 if ($this->admin->hasRoute($route) && $this->admin->isGranted(strtoupper($route), $object)) {
                     $url = $this->admin->generateObjectUrl($route, $object);
                     break;
@@ -84,7 +83,7 @@ class CRUDController extends Controller
 
         if (!$url) {
             $router = $this->get('router');
-            $url= $router->generate('admin_alpixel_menu_menu_list');
+            $url = $router->generate('admin_alpixel_menu_menu_list');
         }
 
         return new RedirectResponse($url);

@@ -24,7 +24,7 @@ class MenuBuilder
     /**
      * MenuBuilder constructor.
      *
-     * @param EntityManager $entityManager
+     * @param EntityManager    $entityManager
      * @param FactoryInterface $factory
      */
     public function __construct(MenuManipulator $menuManipulator, RequestStack $requestStack, EntityManager $entityManager, FactoryInterface $factory)
@@ -130,7 +130,7 @@ class MenuBuilder
      * Create KnpMenuItem.
      *
      * @param string $machineName The name of menu
-     * @param string $locale Language code (Recommanded ISO-639)
+     * @param string $locale      Language code (Recommanded ISO-639)
      *
      * @return KnpMenuItem Get formatted menu
      */
@@ -140,7 +140,7 @@ class MenuBuilder
             throw new UnexpectedValueException('The parameter $machineName must be a non empty string');
         }
 
-        if($locale === null && $this->request !== null) {
+        if ($locale === null && $this->request !== null) {
             $locale = $this->request->getLocale();
         }
 
@@ -170,15 +170,15 @@ class MenuBuilder
     /**
      * Create tree un KnpMenuItem.
      *
-     * @param KnpMenuItem $knpMenu
-     * @param ItemInterface $item
+     * @param KnpMenuItem      $knpMenu
+     * @param ItemInterface    $item
      * @param KnpMenuItem|null $parent
      *
      * @return KnpMenuItem A formatted KnpMenu
      */
     protected function getTree(KnpMenuItem $knpMenu, ItemInterface $item, KnpMenuItem $parent = null)
     {
-        if($parent === null) {
+        if ($parent === null) {
             $menuItem = $knpMenu->addChild($item);
         } else {
             $menuItem = $parent->addChild($item);
@@ -186,10 +186,10 @@ class MenuBuilder
 
         if (($uri = $item->getUri()) !== null) {
             if ($uri[0] == '/') {
-                $baseUri = $this->request->getBasePath() .
-                    $this->request->getBaseURL() .
+                $baseUri = $this->request->getBasePath().
+                    $this->request->getBaseURL().
                     $uri;
-                $uri = $this->request->getSchemeAndHttpHost() . $baseUri;
+                $uri = $this->request->getSchemeAndHttpHost().$baseUri;
 
                 if ($baseUri === $this->currentUri) {
                     $menuItem->setCurrent(true);
@@ -200,7 +200,7 @@ class MenuBuilder
 
         $menuItem->setAttributes([
             'position' => $item->getPosition(),
-            'slug' => $item->getSlug(),
+            'slug'     => $item->getSlug(),
         ]);
 
         foreach ($item->getChildren() as $child) {
