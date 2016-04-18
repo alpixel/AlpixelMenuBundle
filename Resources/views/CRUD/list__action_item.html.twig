@@ -1,5 +1,1 @@
-{% if object.children is defined and object.children|length == 0 %}
-    <span class="btn btn-default btn-sm">Cet élément n'a aucun sous-menu</span>
-{% else %}
-    <a class="btn btn-primary btn-sm" href="{{ admin.generateObjectUrl('item', object) }}">Gérér les sous-menu</a>
-{% endif %}
+<a class="btn btn-primary btn-sm" href="{{ admin.generateObjectUrl('item', object) }}">Gérér les sous-menu</a>
