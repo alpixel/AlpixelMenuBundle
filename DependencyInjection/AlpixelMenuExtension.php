@@ -4,6 +4,7 @@ namespace Alpixel\Bundle\MenuBundle\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\OptionsResolver\Exception\UndefinedOptionsException;
@@ -13,7 +14,7 @@ use Symfony\Component\OptionsResolver\Exception\UndefinedOptionsException;
  *
  * @link http://symfony.com/doc/current/cookbook/bundles/extension.html
  */
-class AlpixelMenuExtension extends Extension
+class AlpixelMenuExtension extends Extension implements PrependExtensionInterface
 {
     /**
      * {@inheritdoc}
@@ -32,5 +33,15 @@ class AlpixelMenuExtension extends Extension
 
         $menuBuilder = $container->getDefinition('alpixel_menu.builder');
         $menuBuilder->addMethodCall('setDefaultLocale', [$container->getParameter('default_locale')]);
+    }
+
+    public function prepend(ContainerBuilder $container)
+    {
+        $parser = new Parser();
+        $config = $parser->parse(file_get_contents(__DIR__ . '/../Resources/config/config.yml'));
+
+        foreach ($config as $key => $configuration) {
+            $container->prependExtensionConfig($key, $configuration);
+        }
     }
 }

@@ -1,0 +1,10 @@
+pix_sortable_behavior:
+    db_driver: orm
+    position_field:
+        default: position
+
+knp_menu:
+    twig:
+        template: 'AlpixelMenuBundle:blocks:menu.html.twig'
+    templating: false
+    default_renderer: twig
