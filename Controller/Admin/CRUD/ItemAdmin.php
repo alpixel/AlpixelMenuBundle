@@ -2,12 +2,14 @@
 
 namespace Alpixel\Bundle\MenuBundle\Controller\Admin\CRUD;
 
+use Alpixel\Bundle\MenuBundle\Entity\Item;
 use Alpixel\Bundle\MenuBundle\Utils\URLChecker;
 use Doctrine\ORM\EntityRepository;
 use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 
 class ItemAdmin extends Admin
@@ -163,6 +165,38 @@ class ItemAdmin extends Admin
                     ],
                 ],
             ]);
+    }
+
+    public function checkUri($object = null)
+    {
+        if($object === null) {
+            return;
+        }
+
+        $form    = $this->getForm();
+        $request = $this->getRequest();
+        $uriType = $request->request->get('uri_type');
+        if (empty($uriType) || !in_array($uriType, [Item::URI_TYPE_EXTERNAL, Item::URI_TYPE_INTERNAL])) {
+            $form->get('uri')->addError(new FormError(
+               'Le type d\'url est invalide !'
+            ));
+
+            return;
+        }
+
+        if ($uriType === Item::URI_TYPE_EXTERNAL) {
+            $uri = $form->get('uri')->getData();
+            if (preg_match('/^https?:\/\//', $uri) === 0) {
+                $form->get('uri')->addError(new FormError(
+                    'Votre lien dois débuter par "http://" ou "https://"'
+                ));
+            }
+        }
+    }
+
+    public function preValidate($object = null)
+    {
+        $this->checkUri($object);
     }
 
     public function postUpdate($object = null)
