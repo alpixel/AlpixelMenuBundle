@@ -15,6 +15,9 @@ use Gedmo\Mapping\Annotation as Gedmo;
  */
 class Item implements ItemInterface
 {
+    const URI_TYPE_EXTERNAL = 'external';
+    const URI_TYPE_INTERNAL = 'internal';
+
     /**
      * @var int
      *
