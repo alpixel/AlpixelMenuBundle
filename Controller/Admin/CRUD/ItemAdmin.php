@@ -188,7 +188,7 @@ class ItemAdmin extends Admin
             $uri = $form->get('uri')->getData();
             if (preg_match('/^https?:\/\//', $uri) === 0) {
                 $form->get('uri')->addError(new FormError(
-                    'Votre lien dois débuter par "http://" ou "https://"'
+                    'Votre lien doit débuter par "http://" ou "https://"'
                 ));
             }
         }
