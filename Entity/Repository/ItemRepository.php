@@ -2,6 +2,7 @@
 
 namespace Alpixel\Bundle\MenuBundle\Entity\Repository;
 
+use Alpixel\Bundle\MenuBundle\Entity\Item;
 use Alpixel\Bundle\MenuBundle\Entity\Menu;
 use Doctrine\ORM\EntityRepository;
 
