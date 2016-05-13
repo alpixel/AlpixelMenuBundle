@@ -82,13 +82,27 @@ class ItemAdmin extends Admin
     {
         $subject = $this->getSubject();
         $isNew = ($this->id($subject) === null) ? true : false;
+        $request = $this->getRequest();
 
-        if ($isNew === true) {
-            $idMenu = $this->getRequest()->query->getInt('create-menu');
-            $idItem = $this->getRequest()->query->getInt('create-item');
-        } else {
-            $idMenu = $subject->getMenu()->getId();
-            $idItem = ($subject->getParent() !== null) ? $subject->getParent()->getId() : 0;
+        $idItem = null;
+        $idMenu = null;
+        if($request->query->has('uniqid')) {
+            $formId = $request->query->get('uniqid');
+            if ($request->request->has($formId)) {
+                $formData = $request->request->get($formId);
+                $idMenu   = $formData['create-menu'];
+                $idItem   = $formData['create-item'];
+            }
+        }
+
+        if ($idMenu === null && $idItem === null) {
+            if ($isNew === true) {
+                $idMenu = $this->getRequest()->query->get('create-menu');
+                $idItem = $this->getRequest()->query->get('create-item');
+            } else {
+                $idMenu = $subject->getMenu()->getId();
+                $idItem = ($subject->getParent() !== null) ? $subject->getParent()->getId() : null;
+            }
         }
 
         $formMapper
@@ -98,7 +112,7 @@ class ItemAdmin extends Admin
                 'property'      => 'name',
                 'query_builder' => function (EntityRepository $entityRepository) use ($idMenu) {
                     $query = $entityRepository->createQuerybuilder('m');
-                    if ($idMenu === 0) {
+                    if ($idMenu === null) {
                         return $query;
                     }
 
@@ -108,20 +122,27 @@ class ItemAdmin extends Admin
                 },
             ]);
 
-        if ($idItem === 0 && $idMenu === 0 || $isNew === false && $subject->getParent() !== null || $isNew === true && $idItem > 0) {
+        if ($idItem != null) {
+            $pool       = $this->getConfigurationPool();
+            $doctrine   = $pool->getContainer()->get('doctrine.orm.default_entity_manager');
+            $parentItem = $doctrine->getRepository('AlpixelMenuBundle:Item')->find($idItem);
+
             $formMapper->add('parent', null, [
                 'label'         => 'Item parent',
                 'required'      => true,
                 'property'      => 'name',
-                'query_builder' => function (EntityRepository $entityRepository) use ($idItem) {
-                    $query = $entityRepository->createQuerybuilder('i');
-                    if ($idItem === 0) {
-                        return $query;
+                'data'          => $parentItem,
+                'query_builder' => function (EntityRepository $repository) use ($parentItem) {
+                    $qb = $repository->createQueryBuilder('i');
+
+                    if ($parentItem->getParent() === null) {
+                         return $qb->where('i.parent IS NULL')
+                             ->andWhere('i.menu = :id')
+                             ->setParameter('id', $parentItem->getMenu());
                     }
 
-                    return $query
-                        ->where('i.id = :id')
-                        ->setParameter('id', $idItem);
+                    return $qb->where('i.id IN (:ids)')
+                        ->setParameter('ids', $parentItem->getParent()->getChildren());
                 },
             ]);
         }
@@ -134,6 +155,16 @@ class ItemAdmin extends Admin
             ->add('uri', 'text', [
                 'label'    => 'URI',
                 'required' => true,
+            ])
+            ->add('create-menu', 'hidden', [
+                'required' => false,
+                'data'     => $idMenu,
+                'mapped'   => false,
+            ])
+            ->add('create-item', 'hidden', [
+                'required' => false,
+                'data'     => $idItem,
+                'mapped'   => false,
             ]);
     }
 
