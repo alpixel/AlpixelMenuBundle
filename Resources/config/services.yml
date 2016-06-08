@@ -7,6 +7,10 @@ services:
             - "@doctrine.orm.entity_manager"
             - "@knp_menu.factory"
 
+    alpixel_menu.menu.menu:
+        class: Alpixel\Bundle\MenuBundle\Menu\Menu
+        arguments: ["@doctrine.orm.entity_manager"]
+
     # SonataAdmin
     alpixel_menu.admin.menu:
         class: Alpixel\Bundle\MenuBundle\Controller\Admin\CRUD\MenuAdmin
@@ -24,7 +28,7 @@ services:
         arguments:
             - ~
             - Alpixel\Bundle\MenuBundle\Entity\Item
-            - AlpixelMenuBundle:CRUD
+            - AlpixelMenuBundle:ItemCRUD
         calls:
             - [ setTemplate, [edit, AlpixelMenuBundle:CRUD:edit__item.html.twig]]
             - [ setTemplate, [list, AlpixelMenuBundle:CRUD:list_item.html.twig]]
