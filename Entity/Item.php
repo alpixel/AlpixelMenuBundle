@@ -15,6 +15,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  */
 class Item implements ItemInterface
 {
+    const URI_TYPE_ANCHOR = 'anchor';
     const URI_TYPE_EXTERNAL = 'external';
     const URI_TYPE_INTERNAL = 'internal';
 
@@ -302,5 +303,19 @@ class Item implements ItemInterface
         $this->slug = $slug;
 
         return $this;
+    }
+
+    public static function getUriType()
+    {
+        return [
+            self::URI_TYPE_ANCHOR,
+            self::URI_TYPE_EXTERNAL,
+            self::URI_TYPE_INTERNAL,
+        ];
+    }
+
+    public static function uriTypeExists($type)
+    {
+        return in_array($type, self::getUriType());
     }
 }

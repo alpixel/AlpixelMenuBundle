@@ -23,9 +23,9 @@ class DisplayLinkExtension extends \Twig_Extension
     {
         $globals = $twig->getGlobals();
         $app = $globals['app'];
-        $env = $app->getEnvironment();
+        $env = $app->getDebug();
 
-        if ($env === 'dev' && strpos($link, 'http') === false) {
+        if ($env && strpos($link, 'http') === false) {
             $dev = ($link[0] === '/') ? 'app_dev.php' : 'app_dev.php/';
             $link = $dev.$link;
         }

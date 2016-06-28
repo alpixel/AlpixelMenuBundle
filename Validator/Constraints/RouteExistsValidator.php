@@ -9,7 +9,6 @@ use Symfony\Component\Validator\ConstraintValidator;
 class RouteExistsValidator extends ConstraintValidator
 {
     private $checker;
-    private $session;
 
     public function __construct(URLChecker $checker)
     {
@@ -18,6 +17,11 @@ class RouteExistsValidator extends ConstraintValidator
 
     public function validate($value, Constraint $constraint)
     {
+        // If the first occurrence of $value is the # character it's an anchor any check is done
+        if (strpos($value, '#') === 0) {
+            return;
+        }
+
         $match = true;
         $code = $this->checker->check($value);
         if ($code === URLChecker::URL_NOT_FOUND) {
