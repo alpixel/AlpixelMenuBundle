@@ -207,11 +207,16 @@ class ItemAdmin extends Admin
         $form    = $this->getForm();
         $request = $this->getRequest();
         $uriType = $request->request->get('uri_type');
-        if (empty($uriType) || !in_array($uriType, [Item::URI_TYPE_EXTERNAL, Item::URI_TYPE_INTERNAL])) {
+
+        if (!Item::uriTypeExists($uriType)) {
             $form->get('uri')->addError(new FormError(
                'Le type d\'url est invalide !'
             ));
 
+            return;
+        }
+
+        if ($uriType === Item::URI_TYPE_ANCHOR) {
             return;
         }
 
@@ -232,13 +237,15 @@ class ItemAdmin extends Admin
 
     public function postUpdate($object = null)
     {
-        if ($object !== null && $object->getUri() !== null) {
-            $container = $this->getConfigurationPool()->getContainer();
-            $checker = $container->get('alpixel_menu.utils.url_checker');
+        if ($object !== null) {
             $url = $object->getUri();
-            if ($checker->check($url) === URLChecker::URL_PROBLEM) {
-                $session = $container->get('session');
-                $session->getFlashBag()->add('warning', 'Cependant une erreur semble être apparue quand nous avons tenté d\'analyser la page "'.$url.'". Vous devriez vérifier que le lien spécifié n\'affiche aucune erreur.');
+            if ($url !== null) {
+                $container = $this->getConfigurationPool()->getContainer();
+                $checker = $container->get('alpixel_menu.utils.url_checker');
+                if ($checker->check($url) === URLChecker::URL_PROBLEM) {
+                    $session = $container->get('session');
+                    $session->getFlashBag()->add('warning', 'Cependant une erreur semble être apparue quand nous avons tenté d\'analyser la page "'.$url.'". Vous devriez vérifier que le lien spécifié n\'affiche aucune erreur.');
+                }
             }
         }
     }
