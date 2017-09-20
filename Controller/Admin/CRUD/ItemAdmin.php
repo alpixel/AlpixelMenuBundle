@@ -170,8 +170,6 @@ class ItemAdmin extends Admin
 
     protected function configureListFields(ListMapper $listMapper)
     {
-        $this->last_position = $this->positionService->getLastPosition($this->getRoot()->getClass());
-
         $listMapper
             ->add('name', null, [
                 'label'    => 'Label',
