@@ -88,7 +88,7 @@ class Item implements ItemInterface
      */
     public function __toString()
     {
-        return $this->name;
+        return (string) $this->name;
     }
 
     /**
